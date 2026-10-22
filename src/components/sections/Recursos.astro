@@ -1,0 +1,43 @@
+---
+import { Download } from 'lucide-react';
+import { site } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import FolderLite from '../ui/FolderLite.astro';
+
+const { recursos } = site;
+---
+
+<section id={recursos.id} class="cv-auto relative border-t border-g4/60 bg-white py-24 lg:py-32" style="--cv-h: 2050px; --cv-h-lg: 1060px">
+  <div class="container-x">
+    <SectionHeader tag={recursos.tag} title={recursos.title} text={recursos.text} />
+
+    <div class="mt-14 grid gap-5 md:grid-cols-3">
+      {
+        recursos.items.map((item, i) => (
+          <a
+            href={item.href}
+            download
+            data-track="file_download"
+            data-origen={item.href}
+            class="rv group/card relative flex flex-col overflow-hidden rounded-3xl border border-g4/70 bg-white shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1.5 hover:border-b3/40 hover:shadow-[var(--shadow-lift)]"
+            data-delay={String(i * 0.08)}
+          >
+            <div class="relative grid place-items-center bg-b6 px-6 pb-6 pt-14">
+              <div class="pointer-events-none absolute inset-0 opacity-60 [background:radial-gradient(60%_60%_at_50%_100%,var(--glow),transparent)]" style={`--glow: ${item.color}22`} />
+              <FolderLite color={item.color} pages={item.pages} />
+            </div>
+            <div class="flex flex-1 flex-col p-6 sm:p-7">
+              <h3 class="text-[17px] font-semibold leading-snug tracking-[-0.015em] text-g1">{item.title}</h3>
+              <p class="mt-2.5 text-[14px] leading-relaxed text-g3">{item.text}</p>
+              <span class="mt-auto inline-flex items-center gap-2 pt-6 text-[14px] font-semibold text-b2 transition group-hover/card:gap-3">
+                <Download size={16} aria-hidden="true" />
+                {item.cta}
+                <span class="text-[12px] font-normal text-g3">· PDF</span>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

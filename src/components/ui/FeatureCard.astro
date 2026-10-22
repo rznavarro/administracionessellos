@@ -1,0 +1,49 @@
+---
+import { icons, type IconName } from '../../lib/icons';
+
+interface Props {
+  icon: IconName;
+  title: string;
+  text: string;
+  index?: number;
+  tone?: 'blue' | 'green' | 'purple';
+  surface?: 'white' | 'soft';
+  // row: ícono a la izquierda (listas de una columna) · stack: ícono arriba (grillas)
+  layout?: 'row' | 'stack';
+  delay?: number;
+}
+
+const { icon, title, text, index, tone = 'blue', surface = 'white', layout = 'row', delay = 0 } = Astro.props;
+const Icon = icons[icon];
+const tones = {
+  blue: 'bg-b5 text-b2 ring-b4/80 group-hover:bg-b2 group-hover:text-white',
+  green: 'bg-gr2 text-gr ring-gr/15 group-hover:bg-gr group-hover:text-white',
+  purple: 'bg-accent2 text-accent ring-accent/15 group-hover:bg-accent group-hover:text-white'
+};
+---
+
+<article
+  class:list={[
+    'rv group relative flex gap-4 rounded-2xl border p-5 transition duration-300 hover:-translate-y-1 hover:border-b3/50 hover:shadow-[var(--shadow-lift)] sm:p-6',
+    layout === 'stack' && 'flex-col',
+    surface === 'white' ? 'border-g4/70 bg-white' : 'border-g4/60 bg-g6'
+  ]}
+  data-delay={String(delay)}
+>
+  <span class:list={['grid size-11 shrink-0 place-items-center rounded-xl ring-1 transition duration-300', tones[tone]]}>
+    <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+  </span>
+  <div>
+    <h3 class="text-[15.5px] font-semibold leading-snug tracking-[-0.015em] text-g1">
+      {title}
+    </h3>
+    <p class="mt-1.5 text-[14px] leading-relaxed text-g3">{text}</p>
+  </div>
+  {
+    index !== undefined && (
+      <span class="absolute right-5 top-5 text-[11px] font-semibold tabular-nums tracking-[0.16em] text-g4" aria-hidden="true">
+        0{index + 1}
+      </span>
+    )
+  }
+</article>

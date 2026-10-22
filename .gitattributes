@@ -1,0 +1,7 @@
+# Texto normalizado a LF; los binarios nunca se convierten (un PDF con saltos de línea cambiados queda corrupto)
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.webp binary
+*.woff2 binary

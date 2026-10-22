@@ -1,0 +1,42 @@
+---
+import { MapPin } from 'lucide-react';
+import { site } from '../../data/site';
+import { rich } from '../../lib/rich';
+import CurvedLoop from '../reactbits/CurvedLoop';
+
+const { cobertura, comunas } = site;
+---
+
+<section class="cv-auto on-dark relative overflow-hidden bg-b1 pb-20 pt-16 text-white lg:pb-24" style="--cv-h: 560px; --cv-h-lg: 560px">
+  <div class="hero-fallback pointer-events-none absolute inset-0 opacity-70" aria-hidden="true"></div>
+  <div class="relative" aria-hidden="true">
+    <CurvedLoop
+      client:visible
+      marqueeText={comunas.join('  ✦  ')}
+      separator="✦"
+      separatorColor="#4ADE80"
+      speed={1.1}
+      curveAmount={140}
+      fontSize={78}
+      fontWeight={700}
+      color="rgba(255,255,255,0.92)"
+      edgeFade={0.12}
+      interactive
+      wrapperClassName="min-h-[120px] sm:min-h-[200px]"
+    />
+  </div>
+  <div class="container-x relative -mt-2 text-center">
+    <h2 class="rv text-[12px] font-semibold uppercase tracking-[0.24em] text-white/60">{cobertura.title}</h2>
+    <ul class="rv mx-auto mt-6 flex max-w-3xl flex-wrap justify-center gap-2.5" data-delay="0.05">
+      {
+        comunas.map(comuna => (
+          <li class="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.06] px-4 py-2 text-[14px] font-medium backdrop-blur">
+            <MapPin size={14} className="text-[#4ADE80]" aria-hidden="true" />
+            {comuna}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="rv mx-auto mt-7 max-w-xl text-pretty text-[15px] leading-relaxed text-white/65 [&_strong]:font-medium [&_strong]:text-white" data-delay="0.1" set:html={rich(cobertura.text)} />
+  </div>
+</section>

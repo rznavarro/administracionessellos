@@ -1,0 +1,47 @@
+---
+// Carpeta que se abre y deja asomar sus hojas al pasar el mouse sobre la tarjeta (.group/card).
+// Versión CSS liviana inspirada en el Folder de React Bits (la actual es un motor WebGL de ~2.500 líneas).
+interface Props {
+  color: string;
+  pages: string[];
+}
+
+const { color, pages } = Astro.props;
+const fan = [
+  'group-hover/card:-translate-x-[62%] group-hover/card:-translate-y-[58%] group-hover/card:-rotate-[12deg]',
+  'group-hover/card:-translate-x-1/2 group-hover/card:-translate-y-[72%] group-hover/card:rotate-[2deg]',
+  'group-hover/card:-translate-x-[38%] group-hover/card:-translate-y-[60%] group-hover/card:rotate-[13deg]'
+];
+---
+
+<div class="relative mx-auto h-[150px] w-[200px]" style={`--folder: ${color}`} aria-hidden="true">
+  <!-- Fondo de la carpeta con su pestaña -->
+  <div class="absolute inset-x-0 bottom-0 h-[128px] rounded-[6px_16px_16px_16px] bg-[var(--folder)] brightness-[0.82]">
+    <span class="absolute -top-[14px] left-0 h-[18px] w-[86px] rounded-t-[10px] bg-[var(--folder)]"></span>
+  </div>
+  <!-- Hojas -->
+  {
+    pages.slice(0, 3).map((page, i) => (
+      <div
+        class:list={[
+          'absolute bottom-7 left-1/2 flex h-[112px] w-[132px] -translate-x-1/2 flex-col gap-1.5 rounded-lg bg-white p-3 shadow-[0_4px_14px_-6px_rgb(0_0_0/0.35)] transition-transform duration-500 ease-[cubic-bezier(0.34,1.4,0.64,1)]',
+          fan[i]
+        ]}
+        style={`z-index: ${i + 1}; transition-delay: ${i * 40}ms`}
+      >
+        <span class="text-[10px] font-bold leading-none text-[var(--folder)]">{page}</span>
+        <span class="mt-1 h-1.5 w-[85%] rounded-full bg-g5"></span>
+        <span class="h-1.5 w-[70%] rounded-full bg-g5"></span>
+        <span class="h-1.5 w-[78%] rounded-full bg-g5"></span>
+        <span class="h-1.5 w-[55%] rounded-full bg-g5"></span>
+      </div>
+    ))
+  }
+  <!-- Tapa frontal -->
+  <div
+    class="absolute inset-x-0 bottom-0 z-10 h-[104px] origin-bottom rounded-[16px] bg-[var(--folder)] shadow-[0_18px_30px_-16px_rgb(0_0_0/0.45)] transition-transform duration-500 ease-[cubic-bezier(0.34,1.4,0.64,1)] [transform:perspective(700px)_rotateX(0deg)] group-hover/card:[transform:perspective(700px)_rotateX(-32deg)]"
+  >
+    <span class="absolute inset-0 rounded-[inherit] bg-gradient-to-b from-white/25 to-transparent"></span>
+    <span class="absolute bottom-4 left-4 h-1.5 w-12 rounded-full bg-white/35"></span>
+  </div>
+</div>

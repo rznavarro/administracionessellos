@@ -1,0 +1,35 @@
+---
+// Reemplaza a los botones del sitio original (.bp, .bs, .bw, .bow, .bwa, .nb)
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'white' | 'ghost-dark' | 'whatsapp';
+  size?: 'md' | 'lg';
+  class?: string;
+  target?: string;
+  rel?: string;
+  download?: boolean;
+  [key: string]: unknown;
+}
+
+const { href, variant = 'primary', size = 'md', class: className = '', ...rest } = Astro.props;
+
+const variants = {
+  primary: 'bg-b1 text-white shadow-[0_10px_30px_-12px_rgb(21_42_69/0.55)] hover:bg-b2 hover:-translate-y-0.5',
+  secondary: 'border border-g4 bg-white text-g1 hover:border-b3 hover:text-b2 hover:-translate-y-0.5',
+  white: 'bg-white text-b1 shadow-[0_10px_30px_-12px_rgb(0_0_0/0.5)] hover:-translate-y-0.5 hover:shadow-[0_16px_40px_-14px_rgb(0_0_0/0.6)]',
+  'ghost-dark': 'border border-white/25 text-white hover:bg-white/10 hover:border-white/45',
+  whatsapp: 'bg-wa text-[#073b1f] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgb(37_211_102/0.6)]'
+};
+const sizes = { md: 'h-12 px-6 text-[14px]', lg: 'h-14 px-8 text-[15px]' };
+const classes = [
+  'group/btn relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold tracking-[-0.01em] transition-all duration-300 ease-out',
+  variants[variant],
+  sizes[size],
+  className
+];
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag href={href} class:list={classes} {...!href && { type: 'button' }} {...rest}>
+  <slot />
+</Tag>

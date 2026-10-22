@@ -1,0 +1,52 @@
+---
+import { ArrowRight } from 'lucide-react';
+import { site, whatsappUrl } from '../../data/site';
+import Button from '../ui/Button.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon';
+import LightRays from '../reactbits/LightRays';
+import Magnet from '../reactbits/Magnet';
+
+const { cta, brand } = site;
+---
+
+<section id="cta" class="cv-auto on-dark relative isolate overflow-hidden bg-[#0E1E33] py-28 text-white lg:py-36" style="--cv-h: 640px; --cv-h-lg: 610px">
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <LightRays
+      client:visible
+      raysOrigin="top-center"
+      raysColor={brand.colors.mist}
+      raysSpeed={0.8}
+      lightSpread={0.9}
+      rayLength={1.6}
+      intensity={0.9}
+      followMouse
+      mouseInfluence={0.08}
+      cursorShadow={false}
+      clickPulse={false}
+    />
+  </div>
+  <div class="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
+
+  <div class="container-x max-w-3xl text-center">
+    <h2 class="rv text-balance text-[clamp(2rem,4.8vw,3.3rem)] font-bold leading-[1.06] tracking-[-0.035em]">
+      {cta.title}
+    </h2>
+    <p class="rv mx-auto mt-6 max-w-2xl text-pretty text-[16.5px] leading-[1.8] text-white/70" data-delay="0.08">
+      {cta.text}
+    </p>
+    <div class="rv mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" data-delay="0.15">
+      <Magnet client:visible padding={70} magnetStrength={5} maxOffset={14}>
+        <Button href="#form" variant="white" size="lg">
+          {cta.primary}
+          <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
+        </Button>
+      </Magnet>
+      <Magnet client:visible padding={70} magnetStrength={5} maxOffset={14}>
+        <Button href={whatsappUrl()} variant="whatsapp" size="lg" target="_blank" rel="noopener noreferrer">
+          <WhatsAppIcon size={19} />
+          {cta.whatsapp}
+        </Button>
+      </Magnet>
+    </div>
+  </div>
+</section>

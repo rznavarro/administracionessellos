@@ -1,0 +1,110 @@
+---
+import { ArrowRight, X } from 'lucide-react';
+import { site, whatsappUrl } from '../../data/site';
+import { rich } from '../../lib/rich';
+import WhatsAppIcon from '../ui/WhatsAppIcon';
+
+const { crisis, nav } = site;
+---
+
+<!-- Aviso de crisis financiera: aparece tras un poco de scroll y se puede cerrar por sesión -->
+<div
+  id="crisis"
+  class="fixed bottom-[84px] left-3 right-3 z-40 flex translate-y-4 items-start gap-3 rounded-2xl border border-white/10 bg-b1/95 p-4 text-[13.5px] leading-snug text-white/85 opacity-0 shadow-[0_24px_48px_-16px_rgb(0_0_0/0.55)] backdrop-blur-xl transition duration-500 ease-out [visibility:hidden] data-[show]:translate-y-0 data-[show]:opacity-100 data-[show]:[visibility:visible] sm:left-5 sm:right-auto sm:max-w-[360px] lg:bottom-5"
+  role="complementary"
+  aria-label="Comunidad en crisis financiera"
+>
+  <span class="mt-0.5 grid size-8 shrink-0 place-items-center rounded-full bg-danger/90 text-[15px] font-bold text-white" aria-hidden="true">!</span>
+  <a href={crisis.href} class="group/c flex-1 [&_strong]:text-white">
+    <span set:html={rich(crisis.text)} />
+    <span class="mt-1.5 flex items-center gap-1 font-semibold text-[#A9C8EC] transition group-hover/c:gap-2">
+      {crisis.link} <ArrowRight size={14} aria-hidden="true" />
+    </span>
+  </a>
+  <button type="button" id="crisis-close" class="-mr-1 -mt-1 grid size-8 shrink-0 place-items-center rounded-full text-white/55 transition hover:bg-white/10 hover:text-white" aria-label="Cerrar aviso">
+    <X size={16} />
+  </button>
+</div>
+
+<!-- WhatsApp flotante (escritorio) -->
+<a
+  href={whatsappUrl()}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Escríbenos por WhatsApp"
+  class="animate-pulse-ring fixed bottom-6 right-6 z-40 hidden size-14 place-items-center rounded-full bg-wa text-white shadow-[0_16px_32px_-12px_rgb(37_211_102/0.7)] transition hover:scale-105 lg:grid"
+>
+  <WhatsAppIcon size={28} />
+</a>
+
+<!-- Barra fija móvil: aparece cuando el formulario de la hero ya no está en pantalla -->
+<div
+  id="mobile-cta"
+  class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-g4/70 bg-white/90 px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition-transform duration-500 ease-out data-[show]:translate-y-0 lg:hidden"
+>
+  <div class="mx-auto flex max-w-md gap-2.5">
+    <a href={nav.cta.href} class="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-b1 text-[14px] font-semibold text-white">
+      {nav.cta.label}
+    </a>
+    <a
+      href={whatsappUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex h-12 items-center justify-center gap-2 rounded-xl bg-wa px-5 text-[14px] font-semibold text-[#073b1f]"
+    >
+      <WhatsAppIcon size={18} /> WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+  // Aviso de crisis: igual que el sitio original, aparece pasado 600px y se cierra por sesión
+  const crisis = document.getElementById('crisis');
+  const storageGet = (key: string) => {
+    try {
+      return sessionStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  };
+  if (crisis && !storageGet('fcris_off')) {
+    const onScroll = () => {
+      if (window.scrollY <= 600) return;
+      crisis.toggleAttribute('data-show', true);
+      window.removeEventListener('scroll', onScroll);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+  document.getElementById('crisis-close')?.addEventListener('click', () => {
+    crisis?.removeAttribute('data-show');
+    try {
+      sessionStorage.setItem('fcris_off', '1');
+    } catch {
+      /* almacenamiento bloqueado: se cierra solo por esta vista */
+    }
+  });
+
+  // Barra móvil: visible cuando ni el formulario ni el footer están en pantalla
+  const bar = document.getElementById('mobile-cta');
+  const form = document.getElementById('form');
+  const footer = document.querySelector('footer');
+  if (bar && form && 'IntersectionObserver' in window) {
+    const visible = new Map<Element, boolean>();
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => visible.set(entry.target, entry.isIntersecting));
+      const formOut = !visible.get(form) && window.scrollY > form.offsetTop;
+      bar.toggleAttribute('data-show', formOut && !visible.get(footer as Element));
+    });
+    observer.observe(form);
+    if (footer) observer.observe(footer);
+  }
+
+  // Medición de descargas de las guías. Los clics a WhatsApp y teléfono ya los mide /medicion.js
+  // (escucha todos los enlaces wa.me y tel:), por eso no se marcan acá.
+  document.addEventListener('click', event => {
+    const target = (event.target as Element | null)?.closest<HTMLElement>('[data-track]');
+    if (!target) return;
+    const gtag = (window as Window & { gtag?: (...args: unknown[]) => void }).gtag;
+    gtag?.('event', target.dataset.track, { origen: target.dataset.origen ?? '' });
+  });
+</script>

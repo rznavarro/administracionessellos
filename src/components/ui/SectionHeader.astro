@@ -1,0 +1,55 @@
+---
+interface Props {
+  tag?: string;
+  title: string | string[];
+  text?: string;
+  align?: 'left' | 'center';
+  dark?: boolean;
+  class?: string;
+}
+
+const { tag, title, text, align = 'left', dark = false, class: className = '' } = Astro.props;
+const lines = Array.isArray(title) ? title : [title];
+const center = align === 'center';
+---
+
+<div class:list={['max-w-2xl', center && 'mx-auto text-center', className]}>
+  {
+    tag && (
+      <p
+        class:list={[
+          'rv mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em]',
+          center && 'justify-center',
+          dark ? 'text-b4' : 'text-b3'
+        ]}
+      >
+        <span class:list={['h-px w-7', dark ? 'bg-b4/70' : 'bg-b3']} aria-hidden="true" />
+        {tag}
+      </p>
+    )
+  }
+  <h2
+    class:list={[
+      'rv text-balance text-[clamp(1.85rem,4.2vw,2.9rem)] font-bold leading-[1.08] tracking-[-0.03em]',
+      dark ? 'text-white' : 'text-g1'
+    ]}
+    data-delay="0.05"
+  >
+    {
+      lines.map((line, i) => (
+        <span class:list={['block', i > 0 && (dark ? 'text-b4' : 'text-b3')]}>{line}</span>
+      ))
+    }
+  </h2>
+  {
+    text && (
+      <p
+        class:list={['rv mt-5 text-pretty text-[15.5px] leading-[1.8]', dark ? 'text-white/70' : 'text-g3']}
+        data-delay="0.1"
+      >
+        {text}
+      </p>
+    )
+  }
+  <slot />
+</div>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  badge: string;
+  title: string;
+  text: string;
+  tone: 'green' | 'blue' | 'purple';
+}
+
+const { badge, title, text, tone } = Astro.props;
+const [number, ...rest] = badge.split(' — ');
+const badgeTones = {
+  green: 'bg-gr2 text-gr',
+  blue: 'bg-b5 text-b2',
+  purple: 'bg-accent2 text-accent'
+};
+---
+
+<div class="max-w-3xl">
+  <p class:list={['rv inline-flex items-center gap-2 rounded-full py-1.5 pl-1.5 pr-4 text-[12.5px] font-semibold', badgeTones[tone]]}>
+    <span class="rounded-full bg-white px-2.5 py-0.5 text-[11px] uppercase tracking-[0.14em]">{number}</span>
+    {rest.join(' — ')}
+  </p>
+  <h2 class="rv mt-6 text-balance text-[clamp(2rem,4.6vw,3.15rem)] font-bold leading-[1.06] tracking-[-0.035em] text-g1" data-delay="0.05">
+    {title}
+  </h2>
+  <p class="rv mt-5 max-w-2xl text-pretty text-[16px] leading-[1.8] text-g3" data-delay="0.1">{text}</p>
+</div>

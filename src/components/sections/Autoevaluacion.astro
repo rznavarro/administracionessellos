@@ -1,0 +1,36 @@
+---
+import { ClipboardCheck, Clock, Gauge } from 'lucide-react';
+import { site } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import SelfTest from '../islands/SelfTest';
+
+const { test } = site;
+const [preguntas, minutos, resultado] = test.meta.split(' · ');
+const facts = [
+  { icon: ClipboardCheck, label: preguntas },
+  { icon: Clock, label: minutos },
+  { icon: Gauge, label: resultado }
+];
+---
+
+<section id={test.id} class="cv-auto relative overflow-hidden bg-white py-24 lg:py-32" style="--cv-h: 980px; --cv-h-lg: 650px">
+  <div class="pointer-events-none absolute -left-32 top-20 size-[420px] rounded-full bg-b5 blur-3xl" aria-hidden="true"></div>
+  <div class="container-x relative grid items-start gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+    <div class="lg:sticky lg:top-32">
+      <SectionHeader tag={test.tag} title={test.title} text={test.text} />
+      <ul class="rv mt-8 flex flex-wrap gap-2.5" data-delay="0.15">
+        {
+          facts.map(({ icon: Icon, label }) => (
+            <li class="inline-flex items-center gap-2 rounded-full border border-g4/80 bg-white px-4 py-2 text-[13px] font-medium text-g2">
+              <Icon size={15} className="text-b3" aria-hidden="true" />
+              {label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="rv" data-delay="0.1">
+      <SelfTest client:visible questions={test.questions} results={test.results} cta={test.cta} />
+    </div>
+  </div>
+</section>

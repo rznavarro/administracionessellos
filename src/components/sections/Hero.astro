@@ -1,0 +1,87 @@
+---
+import { ShieldCheck } from 'lucide-react';
+import { site } from '../../data/site';
+import { rich } from '../../lib/rich';
+import HeroBackground from '../islands/HeroBackground';
+import HeroRotating from '../islands/HeroRotating';
+import HeroStats from '../islands/HeroStats';
+import HeroForm from '../islands/HeroForm';
+import ShinyText from '../reactbits/ShinyText';
+
+const { hero, form, contact, brand } = site;
+const { colors } = brand;
+---
+
+<section id="inicio" class="on-dark relative isolate overflow-hidden bg-b1 text-white">
+  <div class="hero-fallback absolute inset-0 -z-30" aria-hidden="true"></div>
+  <img
+    src={hero.image.src}
+    srcset={`${hero.image.small} 640w, ${hero.image.src} ${hero.image.width}w`}
+    sizes="(min-width: 1024px) 64vw, 50vw"
+    alt={hero.image.alt}
+    width={hero.image.width}
+    height={hero.image.height}
+    fetchpriority="low"
+    decoding="async"
+    class="absolute inset-y-0 right-0 -z-20 h-full w-full object-cover opacity-[0.22] mix-blend-luminosity [mask-image:linear-gradient(to_left,#000_20%,transparent_85%)] lg:w-[64%]"
+  />
+  <div class="absolute inset-0 -z-10" aria-hidden="true">
+    <HeroBackground client:idle colors={[colors.blue, colors.sky, colors.green]} />
+  </div>
+  <div class="grid-lines pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <!-- En móvil el orden es: texto → formulario → cifras. En escritorio el formulario ocupa la columna derecha -->
+  <div class="container-x grid gap-x-12 gap-y-10 pb-16 pt-28 sm:pt-32 lg:grid-cols-12 lg:pb-24 lg:pt-40">
+    <div class="lg:col-span-7">
+      <p
+        class="animate-blur-in mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] py-1.5 pl-1.5 pr-4 text-[12.5px] font-medium backdrop-blur"
+      >
+        <span class="rounded-full bg-white/90 px-2.5 py-0.5 text-[11px] font-semibold text-b1">{contact.registry.split(' · ')[0]}</span>
+        <ShinyText client:idle text={hero.badge} color="rgba(255,255,255,0.72)" shineColor="#ffffff" speed={3} delay={1.5} />
+      </p>
+
+      <h1 class="text-[clamp(2.4rem,4.7vw,3.65rem)] font-bold leading-[1.04] tracking-[-0.04em]">
+        <span class="animate-blur-in block">{hero.titleLead}</span>
+        <span class="animate-blur-in block [animation-delay:120ms]">{hero.titleVerb}</span>
+        <span
+          class="animate-blur-in relative block pb-2 font-serif text-[1.08em] font-normal italic tracking-[-0.01em] text-[#A9C8EC] [animation-delay:240ms]"
+        >
+          <HeroRotating client:idle texts={hero.rotating} />
+        </span>
+      </h1>
+
+      <p class="animate-blur-in mt-6 max-w-xl text-pretty text-[16px] leading-[1.8] text-white/70 [animation-delay:360ms]">
+        {hero.subtitle}
+      </p>
+
+    </div>
+
+    <div id="form" class="animate-blur-in lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1 lg:self-center [animation-delay:200ms]">
+      <HeroForm
+        client:load
+        title={form.title}
+        subtitle={form.subtitle}
+        submit={form.submit}
+        modelHtml={rich(form.model)}
+        errorHtml={rich(form.error)}
+        success={form.success}
+        detailsSubmit={form.detailsSubmit}
+        done={form.done}
+        options={form.options}
+        whatsapp={contact.whatsapp}
+      />
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="animate-blur-in [animation-delay:480ms]">
+        <HeroStats client:visible stats={hero.stats} />
+      </div>
+      <p class="animate-blur-in mt-9 flex items-center gap-2 text-[13px] text-white/55 [animation-delay:600ms]">
+        <ShieldCheck size={16} className="text-[#4ADE80]" aria-hidden="true" />
+        {contact.registry}
+      </p>
+    </div>
+  </div>
+
+  <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" aria-hidden="true"></div>
+</section>

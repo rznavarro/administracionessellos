@@ -1,0 +1,33 @@
+---
+import { Clock } from 'lucide-react';
+import { site } from '../../data/site';
+import ScrollReveal from '../reactbits/ScrollReveal';
+
+const { compromiso } = site;
+---
+
+<section class="cv-auto on-dark relative overflow-hidden bg-b1 py-24 text-white lg:py-32" style="--cv-h: 600px; --cv-h-lg: 700px">
+  <div class="grid-lines pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-white/30 to-transparent" aria-hidden="true"></div>
+  <div class="container-x relative max-w-4xl text-center">
+    <span class="rv mx-auto mb-6 grid size-14 place-items-center rounded-2xl bg-white/10 text-[#A9C8EC] ring-1 ring-white/15">
+      <Clock size={26} strokeWidth={1.7} aria-hidden="true" />
+    </span>
+    <p class="rv text-[11px] font-semibold uppercase tracking-[0.24em] text-white/55">{compromiso.tag}</p>
+    <h2 class="rv mt-4 text-balance text-[clamp(1.6rem,3.4vw,2.4rem)] font-bold tracking-[-0.03em]" data-delay="0.05">
+      {compromiso.title}
+    </h2>
+    <ScrollReveal
+      client:visible={{ rootMargin: '400px' }}
+      as="p"
+      baseOpacity={0.14}
+      baseRotation={0}
+      blurStrength={6}
+      containerClassName="mt-8"
+      textClassName="text-[clamp(1.3rem,2.9vw,2.15rem)] font-medium leading-[1.45] tracking-[-0.02em] text-white"
+      markedClassName="bg-gradient-to-r from-[#A9C8EC] to-[#4ADE80] bg-clip-text text-transparent"
+      wordAnimationEnd="center center"
+      text={compromiso.text}
+    />
+  </div>
+</section>

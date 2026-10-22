@@ -1,0 +1,169 @@
+---
+import { ArrowRight, ArrowUp, Mail, MapPin, Phone, Clock } from 'lucide-react';
+import { site, whatsappUrl } from '../../data/site';
+import WhatsAppIcon from '../ui/WhatsAppIcon';
+
+const { footer, brand, contact, comunas, socials, seoBlock } = site;
+const year = new Date().getFullYear();
+---
+
+<footer class="cv-auto on-dark relative overflow-hidden bg-[#0B1626] text-white/65" style="--cv-h: 2310px; --cv-h-lg: 1150px">
+  <!-- Bloque SEO (antes de la franja CTA, mismo texto que el sitio original) -->
+  <div class="border-b border-white/[0.06] bg-[#0E1C30]">
+    <div class="container-x py-12">
+      <h2 class="text-[15px] font-semibold text-white/85">{seoBlock.title}</h2>
+      <p class="mt-3 max-w-4xl text-[13.5px] leading-[1.9] text-white/60">{seoBlock.text}</p>
+    </div>
+  </div>
+
+  <div class="container-x">
+    <!-- Franja CTA -->
+    <div
+      class="relative mt-16 flex flex-col gap-6 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-b2 to-b1 p-8 sm:p-10 lg:flex-row lg:items-center lg:justify-between"
+    >
+      <div class="grid-lines pointer-events-none absolute inset-0" aria-hidden="true"></div>
+      <div class="relative">
+        <h2 class="text-balance text-[clamp(1.4rem,2.6vw,1.9rem)] font-bold leading-tight tracking-[-0.025em] text-white">
+          {footer.cta.title}
+        </h2>
+        <p class="mt-2 text-[15px] text-white/65">{footer.cta.text}</p>
+      </div>
+      <div class="relative flex flex-col gap-3 sm:flex-row">
+        <a
+          href="#form"
+          class="group inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-white px-6 text-[14px] font-semibold text-b1 transition hover:-translate-y-0.5"
+        >
+          Solicitar propuesta <ArrowRight size={17} className="transition group-hover:translate-x-1" />
+        </a>
+        <a
+          href={whatsappUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-wa px-6 text-[14px] font-semibold text-[#073b1f] transition hover:-translate-y-0.5"
+        >
+          <WhatsAppIcon size={18} /> WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Columnas -->
+    <div class="grid grid-cols-2 gap-x-6 gap-y-12 py-16 lg:grid-cols-[1.5fr_1fr_1.2fr_1fr_1.3fr] lg:gap-10">
+      <div class="col-span-2 lg:col-span-1">
+        <a href="#inicio" class="inline-flex items-center gap-3 text-white">
+          <span class="grid size-11 place-items-center overflow-hidden rounded-full bg-white">
+            <img src={brand.logo.src} width={brand.logo.width} height={brand.logo.height} alt="" class="size-[88%] object-contain" loading="lazy" />
+          </span>
+          <span class="flex flex-col leading-none">
+            <span class="text-[9.5px] font-semibold uppercase tracking-[0.28em] text-white/55">Administraciones</span>
+            <span class="mt-1 font-serif text-[24px] italic">{brand.shortName}</span>
+          </span>
+        </a>
+        <p class="mt-5 max-w-xs text-[13.5px] leading-relaxed">{footer.description}</p>
+        <p class="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-[11.5px] leading-snug text-white/70">
+          <span class="size-1.5 rounded-full bg-[#4ADE80]" aria-hidden="true"></span>
+          {contact.registry}{contact.registryNumber && ` N° ${contact.registryNumber}`}
+        </p>
+        {
+          socials.length > 0 && (
+            <ul class="mt-6 flex flex-wrap gap-2">
+              {socials.map(social => (
+                <li>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex rounded-full border border-white/15 px-3.5 py-1.5 text-[12.5px] text-white/75 transition hover:border-white/40 hover:text-white"
+                  >
+                    {social.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+
+      {
+        footer.columns.map(column => (
+          <nav aria-label={column.title}>
+            <h3 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">{column.title}</h3>
+            <ul class="mt-5 space-y-3">
+              {column.links.map(link => (
+                <li>
+                  <a href={link.href} class="text-[14px] transition hover:text-white" {...(link.href.endsWith('.pdf') && { download: true })}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <div>
+        <h3 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">Contacto</h3>
+        <ul class="mt-5 space-y-3.5 text-[14px]">
+          <li>
+            <a href={contact.phoneHref} class="flex items-center gap-2.5 transition hover:text-white">
+              <Phone size={15} className="text-white/40" aria-hidden="true" />
+              {contact.phoneDisplay}
+            </a>
+          </li>
+          <li>
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 transition hover:text-white">
+              <WhatsAppIcon size={15} className="text-white/40" />
+              WhatsApp
+            </a>
+          </li>
+          <li>
+            <a href={`mailto:${contact.email}`} class="flex items-center gap-2.5 break-all transition hover:text-white">
+              <Mail size={15} className="shrink-0 text-white/40" aria-hidden="true" />
+              {contact.email}
+            </a>
+          </li>
+          {
+            contact.hours && (
+              <li class="flex items-center gap-2.5">
+                <Clock size={15} className="text-white/40" aria-hidden="true" />
+                {contact.hours}
+              </li>
+            )
+          }
+          <li class="flex items-start gap-2.5">
+            <MapPin size={15} className="mt-0.5 shrink-0 text-white/40" aria-hidden="true" />
+            <span class="leading-relaxed">{comunas.join(' · ')}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marca gigante -->
+  <div class="pointer-events-none select-none overflow-hidden" aria-hidden="true">
+    <p
+      class="-mb-[0.22em] bg-gradient-to-b from-white/[0.17] to-white/0 bg-clip-text pr-[0.08em] text-center font-serif text-[clamp(5rem,22vw,19rem)] italic leading-[0.9] tracking-[-0.03em] text-transparent"
+    >
+      {brand.shortName}
+    </p>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="relative border-t border-white/[0.07] bg-[#0B1626]">
+    <div class="container-x flex flex-col items-center justify-between gap-4 py-6 text-[12.5px] text-white/60 sm:flex-row">
+      <p>© {year} {brand.name}. Todos los derechos reservados.</p>
+      <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+        {footer.legal.map(link => <a href={link.href} class="transition hover:text-white">{link.label}</a>)}
+        {
+          brand.credit.label && (
+            <a href={brand.credit.href} target="_blank" rel="noopener noreferrer" class="transition hover:text-white">
+              {brand.credit.label}
+            </a>
+          )
+        }
+        <a href="#inicio" class="inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-white/70 transition hover:border-white/40 hover:text-white">
+          <ArrowUp size={14} aria-hidden="true" /> Volver arriba
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

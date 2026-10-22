@@ -1,0 +1,16 @@
+---
+import { site } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Testimonials from '../islands/Testimonials';
+
+const { testimonios } = site;
+---
+
+<section id="testi" class="cv-auto relative overflow-hidden bg-b6 py-24 lg:py-32" style="--cv-h: 990px; --cv-h-lg: 960px">
+  <div class="container-x">
+    <SectionHeader tag={testimonios.tag} title={testimonios.title} text={testimonios.text} align="center" />
+  </div>
+  <div class="mt-14">
+    <Testimonials client:visible items={testimonios.items} />
+  </div>
+</section>
