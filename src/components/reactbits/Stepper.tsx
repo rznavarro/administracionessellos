@@ -14,15 +14,11 @@ import {
   type ReactNode
 } from 'react';
 import { ArrowLeft, ArrowRight, Check as CheckIcon } from 'lucide-react';
+import { Step, type StepProps } from './StepperStep';
+
+export { Step, type StepProps };
 
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
-
-export interface StepProps {
-  children?: ReactNode;
-  title?: ReactNode;
-  description?: ReactNode;
-  icon?: ReactNode;
-}
 
 interface StepIndicatorProps {
   step: number;
@@ -200,10 +196,6 @@ function Check() {
       <CheckIcon size={16} strokeWidth={2.4} />
     </span>
   );
-}
-
-export function Step({ children }: StepProps) {
-  return <div className="min-w-0">{children}</div>;
 }
 
 export default function Stepper({

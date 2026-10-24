@@ -53,11 +53,13 @@ const { nav, contact } = site;
   const form = document.getElementById('form');
   const footer = document.querySelector('footer');
   if (bar && form && 'IntersectionObserver' in window) {
-    const visible = new Map<Element, boolean>();
+    const latest = new Map<Element, IntersectionObserverEntry>();
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => visible.set(entry.target, entry.isIntersecting));
-      const formOut = !visible.get(form) && window.scrollY > form.offsetTop;
-      bar.toggleAttribute('data-show', formOut && !visible.get(footer as Element));
+      entries.forEach(entry => latest.set(entry.target, entry));
+      const formEntry = latest.get(form);
+      // El formulario quedó arriba (ya se pasó): su borde inferior está sobre la pantalla
+      const formOut = Boolean(formEntry && !formEntry.isIntersecting && formEntry.boundingClientRect.bottom < 0);
+      bar.toggleAttribute('data-show', formOut && !latest.get(footer as Element)?.isIntersecting);
     });
     observer.observe(form);
     if (footer) observer.observe(footer);

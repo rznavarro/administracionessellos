@@ -79,10 +79,14 @@ export const site = {
     rotating: ['el lugar donde vives', 'tu edificio', 'tu condominio', 'tu tranquilidad'],
     subtitle:
       'Mantenciones preventivas para que nada falle, supervisión en terreno todas las semanas y en línea 24/7, seguridad con protocolos definidos y cada gasto controlado con total transparencia.',
-    // Foto de fondo de la hero (va al 22% de opacidad). `small`: versión de 640 px para pantallas chicas
+    // Foto de fondo de la hero (va al 22% de opacidad y en modo luminosidad: basta en escala de grises).
+    // `variants`: versiones más chicas para el srcset
     image: {
       src: '/edificio-residencial.webp',
-      small: '/edificio-residencial-640.webp',
+      variants: [
+        { src: '/edificio-residencial-640.webp', width: 640 },
+        { src: '/edificio-residencial-960.webp', width: 960 }
+      ],
       alt: 'Edificio residencial',
       width: 1100,
       height: 1320

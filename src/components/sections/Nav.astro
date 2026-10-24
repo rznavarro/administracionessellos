@@ -65,9 +65,14 @@ const mobileContacts = [
   <MobileMenu client:media="(max-width: 1023px)" items={mobileItems} contacts={mobileContacts} />
 </div>
 
+<!-- Marca en los primeros 24 px de la página: cuando sale de pantalla, el nav pasa a fondo sólido -->
+<span id="nav-sentinel" class="pointer-events-none absolute inset-x-0 top-0 h-6" aria-hidden="true"></span>
+
 <script>
+  // IntersectionObserver en vez de leer scrollY: leerlo al cargar fuerza un layout de toda la página
   const header = document.querySelector<HTMLElement>('.site-nav');
-  const update = () => header?.toggleAttribute('data-scrolled', window.scrollY > 24);
-  update();
-  window.addEventListener('scroll', update, { passive: true });
+  const sentinel = document.getElementById('nav-sentinel');
+  if (header && sentinel) {
+    new IntersectionObserver(([entry]) => header.toggleAttribute('data-scrolled', !entry.isIntersecting)).observe(sentinel);
+  }
 </script>

@@ -1,10 +1,10 @@
-import { useEffect, useId, useState, type ChangeEvent, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { lazy, Suspense, useEffect, useId, useState, type ChangeEvent, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, Check, LoaderCircle } from 'lucide-react';
 import SpotlightCard from '../reactbits/SpotlightCard';
 import StarBorder from '../reactbits/StarBorder';
 import ClickSpark from '../reactbits/ClickSpark';
-import Stepper, { Step } from '../reactbits/Stepper';
+import { Step } from '../reactbits/StepperStep';
 import WhatsAppIcon from '../ui/WhatsAppIcon';
 import { PREFILL_EVENT, emptyLead, sendLead, track, type Lead } from '../../lib/leads';
 
@@ -37,6 +37,10 @@ interface Props {
 }
 
 type Phase = 'contact' | 'sent' | 'details' | 'done';
+
+// El Stepper solo se usa después de enviar el lead: se carga aparte para aligerar la hidratación inicial
+const loadStepper = () => import('../reactbits/Stepper');
+const Stepper = lazy(loadStepper);
 
 const INPUT =
   'peer w-full rounded-xl border border-white/15 bg-white/[0.06] px-4 text-[14.5px] text-white outline-none transition duration-200 placeholder:text-transparent focus:border-white/55 focus:bg-white/[0.1] [&:-webkit-autofill]:[-webkit-text-fill-color:#fff] [&:-webkit-autofill]:[transition:background-color_9999s]';
@@ -205,6 +209,11 @@ export default function HeroForm(props: Props) {
   const update =
     (name: keyof Lead) => (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
       setLead(current => ({ ...current, [name]: event.target.value }));
+
+  // Apenas se envía el lead se precarga el Stepper, así el paso de detalles abre sin espera
+  useEffect(() => {
+    if (phase === 'sent') void loadStepper();
+  }, [phase]);
 
   // La autoevaluación puede precargar el motivo con su resultado
   useEffect(() => {
@@ -409,86 +418,88 @@ export default function HeroForm(props: Props) {
 
           {phase === 'details' && (
             <Panel key="details">
-              <Stepper
-                step={detailsStep}
-                onStepChange={setDetailsStep}
-                theme="dark"
-                frame={false}
-                width="100%"
-                linear
-                accentColor="#ffffff"
-                style={
-                  {
-                    '--stepper-tile': 'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.09))',
-                    '--stepper-tile-edge': 'rgba(255, 255, 255, 0.16)',
-                    '--stepper-tile-highlight': 'rgba(255, 255, 255, 0.2)',
-                    '--stepper-tile-shadow': '0 6px 16px -8px rgba(0, 0, 0, 0.5)',
-                    '--stepper-well': 'rgba(255, 255, 255, 0.06)'
-                  } as CSSProperties
-                }
-                backButtonText="Volver"
-                nextButtonText="Continuar"
-                completeButtonText={sending ? 'Enviando…' : props.detailsSubmit}
-                nextButtonProps={{
-                  disabled: sending || (detailsStep === 1 && !lead.tipo),
-                  onClick: event => {
-                    if (detailsStep === 2) {
-                      event.preventDefault();
-                      void submitDetails();
-                    }
+              <Suspense fallback={<div className="min-h-[380px]" aria-busy="true" />}>
+                <Stepper
+                  step={detailsStep}
+                  onStepChange={setDetailsStep}
+                  theme="dark"
+                  frame={false}
+                  width="100%"
+                  linear
+                  accentColor="#ffffff"
+                  style={
+                    {
+                      '--stepper-tile': 'linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.09))',
+                      '--stepper-tile-edge': 'rgba(255, 255, 255, 0.16)',
+                      '--stepper-tile-highlight': 'rgba(255, 255, 255, 0.2)',
+                      '--stepper-tile-shadow': '0 6px 16px -8px rgba(0, 0, 0, 0.5)',
+                      '--stepper-well': 'rgba(255, 255, 255, 0.06)'
+                    } as CSSProperties
                   }
-                }}
-              >
-                <Step title="Tu comunidad">
-                  <div className="grid gap-3 pt-1">
-                    <SelectField label="Tu comunidad" name="tipo" value={lead.tipo} options={options.tipo} onChange={update('tipo')} required />
-                    <SelectField
-                      label="¿Eres parte del comité actual?"
-                      name="comite"
-                      value={lead.comite}
-                      options={options.comite}
-                      onChange={update('comite')}
-                    />
-                    <div className="grid grid-cols-3 gap-3">
-                      <Field label="Torres" name="torres" type="number" inputMode="numeric" min={1} max={99} value={lead.torres} onChange={update('torres')} />
-                      <Field label="Pisos" name="pisos" type="number" inputMode="numeric" min={1} max={60} value={lead.pisos} onChange={update('pisos')} />
-                      <Field label="Deptos/piso" name="deptos" type="number" inputMode="numeric" min={1} max={40} value={lead.deptos} onChange={update('deptos')} />
+                  backButtonText="Volver"
+                  nextButtonText="Continuar"
+                  completeButtonText={sending ? 'Enviando…' : props.detailsSubmit}
+                  nextButtonProps={{
+                    disabled: sending || (detailsStep === 1 && !lead.tipo),
+                    onClick: event => {
+                      if (detailsStep === 2) {
+                        event.preventDefault();
+                        void submitDetails();
+                      }
+                    }
+                  }}
+                >
+                  <Step title="Tu comunidad">
+                    <div className="grid gap-3 pt-1">
+                      <SelectField label="Tu comunidad" name="tipo" value={lead.tipo} options={options.tipo} onChange={update('tipo')} required />
+                      <SelectField
+                        label="¿Eres parte del comité actual?"
+                        name="comite"
+                        value={lead.comite}
+                        options={options.comite}
+                        onChange={update('comite')}
+                      />
+                      <div className="grid grid-cols-3 gap-3">
+                        <Field label="Torres" name="torres" type="number" inputMode="numeric" min={1} max={99} value={lead.torres} onChange={update('torres')} />
+                        <Field label="Pisos" name="pisos" type="number" inputMode="numeric" min={1} max={60} value={lead.pisos} onChange={update('pisos')} />
+                        <Field label="Deptos/piso" name="deptos" type="number" inputMode="numeric" min={1} max={40} value={lead.deptos} onChange={update('deptos')} />
+                      </div>
+                      <SelectField
+                        label="¿Tiene ascensores?"
+                        name="ascensores"
+                        value={lead.ascensores}
+                        options={options.ascensores}
+                        onChange={update('ascensores')}
+                      />
                     </div>
-                    <SelectField
-                      label="¿Tiene ascensores?"
-                      name="ascensores"
-                      value={lead.ascensores}
-                      options={options.ascensores}
-                      onChange={update('ascensores')}
-                    />
-                  </div>
-                </Step>
-                <Step title="Qué buscas">
-                  <div className="grid gap-3 pt-1">
-                    <SelectField
-                      label="¿Tiene caldera de agua caliente?"
-                      name="calderas"
-                      value={lead.calderas}
-                      options={options.calderas}
-                      onChange={update('calderas')}
-                    />
-                    <SelectField
-                      label="Espacios comunes (gym, quinchos, sala…)"
-                      name="espacios"
-                      value={lead.espacios}
-                      options={options.espacios}
-                      onChange={update('espacios')}
-                    />
-                    <TextArea label="¿Por qué buscas nueva administración?" name="motivo" value={lead.motivo} onChange={update('motivo')} />
-                    <TextArea
-                      label="¿Qué es lo más importante que debe tener una administración para ti?"
-                      name="importante"
-                      value={lead.importante}
-                      onChange={update('importante')}
-                    />
-                  </div>
-                </Step>
-              </Stepper>
+                  </Step>
+                  <Step title="Qué buscas">
+                    <div className="grid gap-3 pt-1">
+                      <SelectField
+                        label="¿Tiene caldera de agua caliente?"
+                        name="calderas"
+                        value={lead.calderas}
+                        options={options.calderas}
+                        onChange={update('calderas')}
+                      />
+                      <SelectField
+                        label="Espacios comunes (gym, quinchos, sala…)"
+                        name="espacios"
+                        value={lead.espacios}
+                        options={options.espacios}
+                        onChange={update('espacios')}
+                      />
+                      <TextArea label="¿Por qué buscas nueva administración?" name="motivo" value={lead.motivo} onChange={update('motivo')} />
+                      <TextArea
+                        label="¿Qué es lo más importante que debe tener una administración para ti?"
+                        name="importante"
+                        value={lead.importante}
+                        onChange={update('importante')}
+                      />
+                    </div>
+                  </Step>
+                </Stepper>
+              </Suspense>
               {errorNote}
             </Panel>
           )}

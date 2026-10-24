@@ -34,9 +34,11 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 
+  /* Solo en la hero. Arranca visible (opacidad > 0): un elemento con opacidad 0 no cuenta para el LCP
+     hasta que aparece, y el H1 es el LCP en móvil */
   @keyframes blur-in {
     from {
-      opacity: 0;
+      opacity: 0.3;
       filter: blur(12px);
       transform: translateY(14px);
     }

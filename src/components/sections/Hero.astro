@@ -16,7 +16,7 @@ const { colors } = brand;
   <div class="hero-fallback absolute inset-0 -z-30" aria-hidden="true"></div>
   <img
     src={hero.image.src}
-    srcset={`${hero.image.small} 640w, ${hero.image.src} ${hero.image.width}w`}
+    srcset={[...hero.image.variants, { src: hero.image.src, width: hero.image.width }].map(v => `${v.src} ${v.width}w`).join(', ')}
     sizes="(min-width: 1024px) 64vw, 50vw"
     alt={hero.image.alt}
     width={hero.image.width}
@@ -44,7 +44,7 @@ const { colors } = brand;
             <span class="rounded-full bg-white/90 px-2.5 py-0.5 text-[11px] font-semibold text-b1">{contact.registry.split(' · ')[0]}</span>
           )
         }
-        <ShinyText client:idle text={hero.badge} color="rgba(255,255,255,0.72)" shineColor="#ffffff" speed={3} delay={1.5} />
+        <ShinyText client:idle text={hero.badge} color="rgba(255,255,255,0.72)" shineColor="#ffffff" speed={3} delay={5} />
       </p>
 
       <h1 class="text-[clamp(2.4rem,4.7vw,3.65rem)] font-bold leading-[1.04] tracking-[-0.04em]">
