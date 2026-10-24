@@ -6,52 +6,61 @@ import FeatureCard from '../ui/FeatureCard.astro';
 import TiltedCard from '../reactbits/TiltedCard';
 
 const pilar = site.pilares.finanzas;
+const image = pilar.image;
 ---
 
-<section id={pilar.id} class="cv-auto relative bg-white py-24 lg:py-32" style="--cv-h: 2020px; --cv-h-lg: 1390px">
+<section
+  id={pilar.id}
+  class="cv-auto relative bg-white py-24 lg:py-32"
+  style={image ? '--cv-h: 2020px; --cv-h-lg: 1390px' : '--cv-h: 1500px; --cv-h-lg: 950px'}
+>
   <div class="container-x">
     <PillarHeader badge={pilar.badge} title={pilar.title} text={pilar.text} tone="blue" />
 
-    <div class="mt-14 grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
-      <div class="relative order-2 lg:order-1">
-        <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[40px] bg-gradient-to-br from-b5 via-white to-b5" aria-hidden="true"></div>
-        <div class="aspect-[1386/1290] w-full">
-          <TiltedCard
-            client:visible={{ rootMargin: '400px' }}
-            containerHeight="100%"
-            containerWidth="100%"
-            imageWidth="100%"
-            imageHeight="100%"
-            radius={18}
-            rotateAmplitude={5}
-            scaleOnHover={1.02}
-            glare={0.25}
-            shadow={0.3}
-            showTooltip={false}
-            gyroscope={false}
-          >
-            <div class="absolute inset-0 flex flex-col bg-white">
-              <div class="flex h-9 shrink-0 items-center gap-1.5 border-b border-g4/70 bg-g5 px-4" aria-hidden="true">
-                <span class="size-2.5 rounded-full bg-[#FF5F57]"></span>
-                <span class="size-2.5 rounded-full bg-[#FEBC2E]"></span>
-                <span class="size-2.5 rounded-full bg-[#28C840]"></span>
-                <span class="ml-3 flex h-5 flex-1 items-center rounded-md bg-white px-3 text-[10.5px] text-g3">Plataforma de gastos comunes</span>
-              </div>
-              <img
-                src={pilar.image.src}
-                alt={pilar.image.alt}
-                width={pilar.image.width}
-                height={pilar.image.height}
-                loading="lazy"
-                decoding="async"
-                class="min-h-0 w-full flex-1 object-cover object-top"
-              />
+    <div class:list={['mt-14 grid items-center gap-12', image && 'lg:grid-cols-[1.1fr_1fr] lg:gap-14']}>
+      {
+        image && (
+          <div class="relative order-2 lg:order-1">
+            <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[40px] bg-gradient-to-br from-b5 via-white to-b5" aria-hidden="true" />
+            <div class="w-full" style={`aspect-ratio: ${image.width} / ${image.height + 70}`}>
+              <TiltedCard
+                client:visible={{ rootMargin: '400px' }}
+                containerHeight="100%"
+                containerWidth="100%"
+                imageWidth="100%"
+                imageHeight="100%"
+                radius={18}
+                rotateAmplitude={5}
+                scaleOnHover={1.02}
+                glare={0.25}
+                shadow={0.3}
+                showTooltip={false}
+                gyroscope={false}
+              >
+                <div class="absolute inset-0 flex flex-col bg-white">
+                  <div class="flex h-9 shrink-0 items-center gap-1.5 border-b border-g4/70 bg-g5 px-4" aria-hidden="true">
+                    <span class="size-2.5 rounded-full bg-[#FF5F57]" />
+                    <span class="size-2.5 rounded-full bg-[#FEBC2E]" />
+                    <span class="size-2.5 rounded-full bg-[#28C840]" />
+                    <span class="ml-3 flex h-5 flex-1 items-center rounded-md bg-white px-3 text-[10.5px] text-g3">Plataforma de gastos comunes</span>
+                  </div>
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    loading="lazy"
+                    decoding="async"
+                    class="min-h-0 w-full flex-1 object-cover object-top"
+                  />
+                </div>
+              </TiltedCard>
             </div>
-          </TiltedCard>
-        </div>
-      </div>
+          </div>
+        )
+      }
 
-      <div class="order-1 grid gap-3.5 lg:order-2">
+      <div class:list={['order-1 grid gap-3.5 lg:order-2', !image && 'md:grid-cols-2']}>
         {pilar.cards.map((card, i) => <FeatureCard icon={card.icon} title={card.title} text={card.text} surface="soft" delay={i * 0.05} />)}
       </div>
     </div>

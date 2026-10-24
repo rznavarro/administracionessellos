@@ -6,26 +6,31 @@ import type { IconName } from '../lib/icons';
 
 export const site = {
   brand: {
-    name: 'Administraciones Roselló',
-    shortName: 'Roselló',
-    logo: { src: '/logo-nav.webp', width: 168, height: 155 },
-    favicon: '/favicon-rosello.png',
-    touchIcon: '/logo-touch.png',
+    name: 'ADMINOR',
+    shortName: 'ADMINOR',
+    // Logo en blanco con fondo transparente (el nav y el footer son oscuros). Se generó desde logo/
+    // (JPEG original) con transparencia según la luminosidad. La bajada va como texto en el footer.
+    logo: { src: '/logo-adminor.webp', width: 1086, height: 211, alt: 'ADMINOR' },
+    tagline: 'Somos tu norte en Administración',
+    favicon: '/favicon-adminor.png',
+    touchIcon: '/logo-adminor-touch.png',
     // Colores que usan los fondos WebGL (Aurora, LightRays). Mantener en sintonía con global.css
     colors: { navy: '#152A45', blue: '#2D6098', sky: '#7FA7D6', mist: '#D6E4F0', green: '#1F7A4A' },
     // Crédito opcional en el footer (p. ej. la agencia). Vacío = no se muestra
     credit: { label: '', href: '' }
   },
 
+  // Datos de contacto de ADMINOR (pendientes). Todo campo vacío oculta lo que depende de él:
+  // sin `whatsapp` no hay botones de WhatsApp; sin `phoneHref` no se muestra el teléfono, etc.
   contact: {
-    phoneDisplay: '+56 9 5014 4393',
-    phoneHref: 'tel:+56950144393',
-    whatsapp: '56950144393',
+    phoneDisplay: '', // ej. '+56 9 1234 5678'
+    phoneHref: '', // ej. 'tel:+56912345678'
+    whatsapp: '', // solo dígitos con código de país, ej. '56912345678'
     whatsappMessage: 'Hola, quiero saber más sobre la administración de mi comunidad.',
-    email: 'admrosello@gmail.com',
-    // Vacío = no se muestra
+    email: '',
     hours: '',
-    registry: 'Ley 21.442 · Registro Nacional de Administradores',
+    // Inscripción en el Registro Nacional de Administradores (Ley 21.442), ej. 'Ley 21.442 · Registro Nacional de Administradores'
+    registry: '',
     // Número de inscripción en el Registro Nacional de Administradores. Vacío = no se muestra
     registryNumber: ''
   },
@@ -33,26 +38,25 @@ export const site = {
   // Redes sociales. Vacías = no se muestran
   socials: [] as { label: string; href: string }[],
 
-  comunas: ['Las Condes', 'Vitacura', 'La Reina', 'Lo Barnechea', 'Providencia', 'Ñuñoa'],
+  // Comunas donde opera ADMINOR. Vacío = no se muestra la sección de cobertura
+  comunas: [] as string[],
 
   seo: {
-    title: 'Administración de Edificios y Condominios Sector Oriente Santiago | Administraciones Roselló',
-    description:
-      'Administración de edificios y condominios en el sector oriente de Santiago. Visitas con informe y gasto común claro.',
-    ogTitle: 'Administraciones Roselló | Administración de Edificios y Condominios Sector Oriente Santiago',
+    title: 'Administración de Edificios y Condominios | ADMINOR',
+    description: 'ADMINOR: administración de edificios y condominios. Visitas con informe y gasto común claro.',
+    ogTitle: 'ADMINOR | Administración de Edificios y Condominios',
     ogDescription:
       'Cuidamos el lugar donde vives, el estado de sus instalaciones y tu tranquilidad. Visitas semanales con informe, respuesta en menos de 24 horas y transparencia total en costos.',
-    ogImage: 'https://administracionesrosello.cl/administracion-edificios-sector-oriente-santiago.jpg',
-    canonical: 'https://administracionesrosello.cl/',
+    // Pendientes del dominio de ADMINOR. Vacío = no se emite la etiqueta
+    ogImage: '', // URL absoluta de la imagen para redes, ej. 'https://dominio.cl/og.jpg'
+    canonical: '', // ej. 'https://dominio.cl/'
     locale: 'es_CL',
-    googleVerification: '7TDlQxcFf439-R_0R_H8cPvnwjeNsR5joySLczTH4zo',
-    // Medición: GA4 + Google Ads + atribución. Vive en el hosting, no en este repo
-    measurementScript: '/medicion.js?v=3',
+    googleVerification: '', // token de Google Search Console
+    measurementScript: '', // script de analítica propio, ej. '/analitica.js'
     business: {
-      description:
-        'Administración de edificios y condominios de casas en el sector oriente de Santiago: Las Condes, Vitacura, La Reina, Lo Barnechea, Providencia y Ñuñoa.',
-      locality: 'Santiago',
-      region: 'Región Metropolitana',
+      description: 'Administración de edificios y condominios de casas conforme a la Ley 21.442.',
+      locality: '',
+      region: '',
       country: 'CL',
       priceRange: '$$'
     }
@@ -60,15 +64,16 @@ export const site = {
 
   nav: {
     links: [
-      { label: 'Comunidad en crisis financiera', href: '/crisis-financiera/' },
-      { label: 'Condominio de casas', href: '/condominio-de-casas/' },
-      { label: 'Soy inmobiliaria', href: '/inmobiliarias/' }
+      { label: 'Cómo trabajamos', href: '#modelo' },
+      { label: 'Gasto común', href: '#ggcc' },
+      { label: 'Seguridad', href: '#seg' },
+      { label: 'Preguntas', href: '#faq' }
     ],
     cta: { label: 'Evalúa tu comunidad', href: '#form' }
   },
 
   hero: {
-    badge: 'Edificios y condominios · Sector Oriente',
+    badge: 'Administración de edificios y condominios',
     titleLead: 'No solo administramos.',
     titleVerb: 'Cuidamos',
     rotating: ['el lugar donde vives', 'tu edificio', 'tu condominio', 'tu tranquilidad'],
@@ -76,28 +81,31 @@ export const site = {
       'Mantenciones preventivas para que nada falle, supervisión en terreno todas las semanas y en línea 24/7, seguridad con protocolos definidos y cada gasto controlado con total transparencia.',
     // Foto de fondo de la hero (va al 22% de opacidad). `small`: versión de 640 px para pantallas chicas
     image: {
-      src: '/administracion-edificios-sector-oriente-santiago.webp',
-      small: '/administracion-edificios-sector-oriente-santiago-640.webp',
-      alt: 'Edificio residencial administrado en el sector oriente de Santiago',
+      src: '/edificio-residencial.webp',
+      small: '/edificio-residencial-640.webp',
+      alt: 'Edificio residencial',
       width: 1100,
       height: 1320
     },
+    // Cifras de la hero. `value` anima el número (p. ej. { value: 10, suffix: '+', label: 'Años de experiencia' })
     stats: [
-      { value: 15, suffix: '+', label: 'Años de experiencia' },
-      { value: 15, suffix: '+', label: 'Comunidades' },
       { text: '<24h', label: 'Respuesta a toda solicitud' },
       { text: '24/7', label: 'Supervisión online' }
     ] as { value?: number; suffix?: string; text?: string; label: string }[]
   },
 
   form: {
+    // Adónde se envía el formulario (POST con JSON; debe responder {"ok": true})
+    endpoint: '/contacto.php',
     title: 'Cuéntanos de tu comunidad',
     subtitle: 'Te contactamos en menos de 24 horas.',
     submit: 'Quiero que me contacten',
     model: '**Nosotros hacemos el trabajo; el comité supervisa y fiscaliza.** Juntos fijamos objetivos y normas.',
     success: {
       title: 'Recibimos tu solicitud',
-      text: 'Te contactaremos en menos de 24 horas. ¿Quieres comunicarte de forma directa?',
+      text: 'Te contactaremos en menos de 24 horas.',
+      // Solo se muestra si hay WhatsApp configurado
+      direct: '¿Quieres comunicarte de forma directa?',
       whatsapp: 'Contactar por WhatsApp',
       whatsappMessage: 'Hola, acabo de enviar el formulario en la web. Soy {nombre}.',
       details: 'Completar los detalles de mi comunidad',
@@ -108,10 +116,9 @@ export const site = {
       title: 'Listo, gracias',
       text: 'Con estos datos preparamos una propuesta personalizada para tu comunidad.'
     },
-    error: 'No se pudo enviar. Intenta de nuevo o escríbenos directo al **+56 9 5014 4393**.',
+    error: 'No se pudo enviar. Intenta de nuevo en unos minutos.',
     options: {
       comite: ['Sí, soy presidente del comité', 'Sí, soy parte del comité', 'No'],
-      comuna: ['Las Condes', 'Vitacura', 'La Reina', 'Lo Barnechea', 'Providencia', 'Ñuñoa', 'Otra'],
       tipo: ['Edificio', 'Condominio de casas', 'Inmobiliaria'],
       ascensores: ['Sí', 'No'],
       calderas: ['Sí, caldera central', 'No, cada depto tiene su calefón', 'No sé'],
@@ -164,7 +171,7 @@ export const site = {
     tag: 'Cómo trabajamos',
     title: 'El comité supervisa. Nosotros hacemos el trabajo.',
     paragraphs: [
-      'Con Administraciones Roselló, el comité no tiene que perseguir proveedores, cotizar reparaciones ni estar encima de cada mantención. Su rol es supervisar y fiscalizar; el nuestro es ejecutar.',
+      'Con ADMINOR, el comité no tiene que perseguir proveedores, cotizar reparaciones ni estar encima de cada mantención. Su rol es supervisar y fiscalizar; el nuestro es ejecutar.',
       'Juntos fijamos los objetivos, las metas y las normas de la comunidad. Desde ahí, hacerlas cumplir es responsabilidad nuestra, y el comité ve cada avance sin tener que hacer el trabajo.'
     ],
     steps: [
@@ -199,12 +206,8 @@ export const site = {
       badge: 'Pilar 1 — Supervisión permanente',
       title: 'Ojos en tu comunidad, siempre: en terreno y en línea',
       text: 'No administramos desde un escritorio. Nuestro equipo va a tu comunidad todas las semanas, recorre cada área con checklists internos y documenta todo con fotos. Y entre visita y visita, la supervisión sigue: remota, en línea, 24/7.',
-      image: {
-        src: '/informe-inspeccion-terreno-condominio.webp',
-        alt: 'Informe de inspección semanal en terreno enviado al comité de administración',
-        width: 700,
-        height: 1400
-      },
+      // Captura vertical (p. ej. un informe de visita) que se muestra en un teléfono. null = sin imagen
+      image: null as null | { src: string; alt: string; width: number; height: number },
       cards: [
         {
           icon: 'calendarCheck',
@@ -243,12 +246,8 @@ export const site = {
       badge: 'Pilar 2 — Finanzas claras',
       title: 'Sabes exactamente en qué se gasta cada peso',
       text: 'Transparencia en costos de verdad: comunicamos periódicamente en qué se gasta el gasto común, revisamos cada cobro y trabajamos con fondos de reserva para que las emergencias no afecten el presupuesto.',
-      image: {
-        src: '/plataforma-gastos-comunes-transparencia.webp',
-        alt: 'Plataforma en línea de gastos comunes: ingresos, egresos, morosidad y fondo de reserva',
-        width: 1386,
-        height: 1220
-      },
+      // Captura de la plataforma de gastos comunes, en un marco de navegador. null = sin imagen
+      image: null as null | { src: string; alt: string; width: number; height: number },
       cards: [
         {
           icon: 'layoutDashboard',
@@ -273,7 +272,7 @@ export const site = {
       ] as { icon: IconName; title: string; text: string }[],
       legal: {
         title: 'Estabilidad y excelente manejo financiero',
-        text: 'No es una promesa: es la consecuencia de más de 15 años haciendo este trabajo. Siempre dentro del marco legal — Ley 21.442 y su Reglamento: cuenta bancaria (Art. 33), presupuesto en asamblea (Art. 22), registro de copropietarios (Art. 9).'
+        text: 'Siempre dentro del marco legal — Ley 21.442 y su Reglamento: cuenta bancaria (Art. 33), presupuesto en asamblea (Art. 22), registro de copropietarios (Art. 9).'
       }
     },
     seguridad: {
@@ -290,7 +289,7 @@ export const site = {
         {
           icon: 'shieldCheck',
           title: 'Guardias y vigilancia para condominios de casas',
-          text: 'Altos estándares de seguridad: guardias, control perimetral y accesos cuidados, con convenios con prestigiosas empresas de seguridad con más de 15 años de experiencia. Para que vivas tranquilo.'
+          text: 'Altos estándares de seguridad: guardias, control perimetral y accesos cuidados, en convenio con empresas de seguridad especialistas. Para que vivas tranquilo.'
         },
         {
           icon: 'handshake',
@@ -337,45 +336,15 @@ export const site = {
       }
     },
     sello:
-      'Lo difícil es que el gasto común **provisione, se anticipe y te entregue tranquilidad**. Ese es nuestro sello, y es la consecuencia de más de 15 años de experiencia.'
+      'Lo difícil es que el gasto común **provisione, se anticipe y te entregue tranquilidad**. Ese es nuestro sello.'
   },
 
   testimonios: {
     tag: 'Experiencias reales',
     title: 'Lo que dicen nuestros edificios',
     text: 'Les preguntamos directamente a nuestros clientes qué es lo que más valoran.',
-    items: [
-      {
-        name: 'Edificio Las Violetas',
-        meta: 'Residencial',
-        quote: 'Presencia en terreno, respuestas rápidas al comité y residentes. Proactivos, proponen mejoras.'
-      },
-      {
-        name: 'Edificio Don Arturo',
-        meta: 'Las Condes · 45 dptos',
-        quote: 'Apoyo permanente al comité, buena disponibilidad frente a requerimientos. Mantenciones al día.'
-      },
-      { name: 'Príncipe de Gales', meta: 'Residencial', quote: 'Conoce la ley. Gastos claros y documentados. Mantenciones al día.' },
-      {
-        name: 'Comité de administración',
-        meta: 'Residencial',
-        quote:
-          'Administrador presente, no se le van detalles. Conoce perfectamente los aspectos técnicos. Gasto común estable y alineado con el comité.'
-      },
-      {
-        name: 'Edificio Amunátegui',
-        meta: 'Residencial',
-        quote:
-          'Manejo financiero en reparaciones mayores. Gastos comunes parejos y acotados a presupuesto. Al día en todas las mantenciones.'
-      },
-      {
-        name: 'Cliente inmobiliaria',
-        meta: 'Inmobiliaria',
-        featured: true,
-        quote:
-          'Permanente contacto con comité, aviso oportuno de urgencias, identificación rápida de emergencias y soluciones. Financieramente muy bien.'
-      }
-    ] as { name: string; meta: string; quote: string; featured?: boolean }[]
+    // Testimonios de clientes de ADMINOR. Vacío = no se muestra la sección
+    items: [] as { name: string; meta: string; quote: string; featured?: boolean }[]
   },
 
   test: {
@@ -431,7 +400,7 @@ export const site = {
     items: [
       {
         q: '¿Cómo es el proceso para cambiar de administración?',
-        a: 'Está regulado por la Ley 21.442 y es más simple de lo que parece: el administrador se mantiene en su cargo solo mientras cuente con la confianza de la asamblea, y puede ser removido en cualquier momento por acuerdo de ella (art. 18). El proceso típico: 1) El comité de administración o copropietarios que representen al menos el 10% de los derechos del condominio solicitan tratar el tema (art. 14) — y desde la nueva ley la designación o remoción del administrador puede verse incluso en asamblea ordinaria, sin esperar una extraordinaria. 2) Se cita con entre 5 y 15 días de anticipación (art. 16), en sesión presencial, telemática o mixta. 3) La asamblea acuerda la remoción y designa al reemplazo con las mayorías que fija el cuadro del artículo 15. 4) La designación del nuevo administrador se reduce a escritura pública, y el saliente debe entregar la documentación completa junto a su rendición de cuentas final documentada (art. 21): libros de actas, contabilidad, contratos, planos y respaldos. Los errores más comunes: citaciones fuera de plazo, actas sin las formalidades y traspasos sin inventario de documentos. Nosotros acompañamos todo el proceso sin costo: convocatoria, acta, quórums, escritura y transición documental y financiera, para que la comunidad no quede ni un día a la deriva. [Acá está la guía completa paso a paso →](/como-cambiar-de-administracion/)'
+        a: 'Está regulado por la Ley 21.442 y es más simple de lo que parece: el administrador se mantiene en su cargo solo mientras cuente con la confianza de la asamblea, y puede ser removido en cualquier momento por acuerdo de ella (art. 18). El proceso típico: 1) El comité de administración o copropietarios que representen al menos el 10% de los derechos del condominio solicitan tratar el tema (art. 14) — y desde la nueva ley la designación o remoción del administrador puede verse incluso en asamblea ordinaria, sin esperar una extraordinaria. 2) Se cita con entre 5 y 15 días de anticipación (art. 16), en sesión presencial, telemática o mixta. 3) La asamblea acuerda la remoción y designa al reemplazo con las mayorías que fija el cuadro del artículo 15. 4) La designación del nuevo administrador se reduce a escritura pública, y el saliente debe entregar la documentación completa junto a su rendición de cuentas final documentada (art. 21): libros de actas, contabilidad, contratos, planos y respaldos. Los errores más comunes: citaciones fuera de plazo, actas sin las formalidades y traspasos sin inventario de documentos. Nosotros acompañamos todo el proceso: convocatoria, acta, quórums, escritura y transición documental y financiera, para que la comunidad no quede ni un día a la deriva.'
       },
       {
         q: '¿Qué hace una empresa administradora de edificios y condominios?',
@@ -442,12 +411,8 @@ export const site = {
         a: 'Depende del tamaño de la comunidad y los servicios que necesite. Evaluamos tu caso y entregamos una propuesta clara. Sin costos ocultos ni compromisos de largo plazo: transparencia en costos desde la primera conversación.'
       },
       {
-        q: '¿En qué comunas trabajan?',
-        a: 'En Las Condes, Vitacura, La Reina, Lo Barnechea, Providencia y Ñuñoa. Es una decisión deliberada: no administramos lo que no podemos supervisar en persona.'
-      },
-      {
         q: '¿Administran condominios de casas?',
-        a: 'Sí. Además de edificios, administramos condominios de casas con altos estándares de seguridad: guardias y control perimetral en convenio con prestigiosas empresas de seguridad con más de 15 años de experiencia, áreas verdes, portones y gastos comunes con la misma transparencia.'
+        a: 'Sí. Además de edificios, administramos condominios de casas con altos estándares de seguridad: guardias y control perimetral en convenio con empresas de seguridad especialistas, áreas verdes, portones y gastos comunes con la misma transparencia.'
       },
       {
         q: '¿Cómo sé en qué se gasta mi gasto común?',
@@ -500,40 +465,13 @@ export const site = {
     tag: 'Recursos para tu comunidad',
     title: 'Esto es lo mínimo que deberías recibir de tu administración',
     text: 'Creemos que toda comunidad debería poder exigir lo básico, tenga o no un buen administrador. Por eso preparamos estas guías: para que sepas exactamente qué esperar, qué exigir y cómo prepararte. Si después de leerlas sientes que algo no cuadra en tu edificio, ya sabes por dónde empezar.',
-    items: [
-      {
-        icon: 'listChecks',
-        color: '#1E3F6E',
-        title: 'Checklist: ¿Qué debe entregar tu administración cada mes?',
-        text: '15 puntos concretos que todo condominio debería recibir. Si tu administrador no cumple con varios, el problema no es el checklist — es el administrador.',
-        href: '/checklist_administracion.pdf',
-        cta: 'Descargar checklist',
-        pages: ['Checklist', 'Mes a mes', '15 puntos']
-      },
-      {
-        icon: 'scale',
-        color: '#1F7A4A',
-        title: 'Guía legal: Qué puedes exigirle a tu administrador',
-        text: 'La Ley 21.442 le exige cosas concretas a tu administrador. Acá te explicamos cuáles son, sin jerga legal, para que llegues informado a la próxima asamblea.',
-        href: '/guia_legal_administracion.pdf',
-        cta: 'Descargar guía legal',
-        pages: ['Ley 21.442', 'Derechos', 'Obligaciones']
-      },
-      {
-        icon: 'clipboardList',
-        color: '#2D6098',
-        title: 'Guía para asambleas: Cómo prepararte y qué preguntar',
-        text: 'La asamblea es donde se toman las decisiones reales sobre tu edificio. Si no participas preparado, otros deciden por ti — incluyendo cuánto pagas.',
-        href: '/guia_asambleas.pdf',
-        cta: 'Descargar guía de asambleas',
-        pages: ['Asamblea', 'Preguntas', 'Quórums']
-      }
-    ] as { icon: IconName; color: string; title: string; text: string; href: string; cta: string; pages: string[] }[]
+    // Guías descargables (PDF en public/). Vacío = no se muestra la sección
+    items: [] as { icon: IconName; color: string; title: string; text: string; href: string; cta: string; pages: string[] }[]
   },
 
   seoBlock: {
-    title: 'Administración de edificios y condominios en el sector oriente de Santiago',
-    text: 'Administraciones Roselló es una empresa especializada en la administración de edificios y condominios de casas en Las Condes, Vitacura, La Reina, Lo Barnechea, Providencia y Ñuñoa. Trabajamos conforme a la Ley 21.442 de Copropiedad Inmobiliaria: gestión financiera y de gastos comunes con transparencia total, mantenciones preventivas calendarizadas, supervisión de personal, asesoría permanente al comité de administración y visitas semanales a terreno con informes fotográficos. Nuestro objetivo es que cada comunidad funcione con procesos claros, comunicación permanente con propietarios y residentes, y un gasto común estable que dé tranquilidad.'
+    title: 'Administración de edificios y condominios',
+    text: 'ADMINOR es una empresa especializada en la administración de edificios y condominios de casas. Trabajamos conforme a la Ley 21.442 de Copropiedad Inmobiliaria: gestión financiera y de gastos comunes con transparencia total, mantenciones preventivas calendarizadas, supervisión de personal, asesoría permanente al comité de administración y visitas semanales a terreno con informes fotográficos. Nuestro objetivo es que cada comunidad funcione con procesos claros, comunicación permanente con propietarios y residentes, y un gasto común estable que dé tranquilidad.'
   },
 
   footer: {
@@ -541,7 +479,7 @@ export const site = {
       title: '¿Tu comunidad merece una administración más seria?',
       text: 'Conversemos. Te respondemos en menos de 24 horas.'
     },
-    description: 'Administración de edificios y condominios de casas en el sector oriente de Santiago, conforme a la Ley 21.442.',
+    description: 'Administración de edificios y condominios de casas, conforme a la Ley 21.442.',
     columns: [
       {
         title: 'Navegación',
@@ -549,41 +487,18 @@ export const site = {
           { label: 'Cómo trabajamos', href: '#modelo' },
           { label: 'Gasto común', href: '#ggcc' },
           { label: 'Seguridad', href: '#seg' },
-          { label: 'Casos reales', href: '#testi' },
+          { label: 'Autoevaluación', href: '#test' },
           { label: 'Preguntas', href: '#faq' }
-        ]
-      },
-      {
-        title: 'Soluciones',
-        links: [
-          { label: 'Comunidad en crisis financiera', href: '/crisis-financiera/' },
-          { label: 'Condominio de casas', href: '/condominio-de-casas/' },
-          { label: 'Soy inmobiliaria', href: '/inmobiliarias/' },
-          { label: 'Cómo cambiar de administración', href: '/como-cambiar-de-administracion/' }
-        ]
-      },
-      {
-        title: 'Recursos',
-        links: [
-          { label: 'Checklist mensual (PDF)', href: '/checklist_administracion.pdf' },
-          { label: 'Guía legal (PDF)', href: '/guia_legal_administracion.pdf' },
-          { label: 'Guía para asambleas (PDF)', href: '/guia_asambleas.pdf' },
-          { label: 'Autoevaluación', href: '#test' }
         ]
       }
     ],
     // Enlaces legales (política de privacidad, términos). Vacío = no se muestran
     legal: [] as { label: string; href: string }[]
-  },
-
-  crisis: {
-    text: '¿Tu comunidad está en **crisis financiera**? Somos expertos en recuperarla.',
-    link: 'Haz click para saber más',
-    href: '/crisis-financiera/'
   }
 };
 
 export type Site = typeof site;
 
+// '' si no hay número de WhatsApp configurado
 export const whatsappUrl = (message = site.contact.whatsappMessage) =>
-  `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(message)}`;
+  site.contact.whatsapp ? `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(message)}` : '';

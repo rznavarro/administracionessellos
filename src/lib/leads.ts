@@ -1,5 +1,5 @@
-// Envío del formulario a /contacto.php (vive en el hosting, fuera de este repo).
-// Mismo contrato que el formulario original: JSON con estas claves y respuesta {ok:true}.
+// Envío del formulario al endpoint de site.form.endpoint (vive en el hosting, fuera de este repo).
+// Contrato: POST con JSON con estas claves; el servidor responde {ok:true}.
 
 export interface Lead {
   nombre: string;
@@ -41,7 +41,7 @@ export const emptyLead: Lead = {
 };
 
 // Evento con el que la autoevaluación precarga el motivo en el formulario de la hero
-export const PREFILL_EVENT = 'rosello:prefill';
+export const PREFILL_EVENT = 'adminor:prefill';
 
 declare global {
   interface Window {
@@ -53,22 +53,12 @@ export const track = (event: string, params: Record<string, string>) => {
   if (window.gtag) window.gtag('event', event, params);
 };
 
-// Cookie anti-bot del hosting: sin ella el POST rebota con 409
-export const setHumanCookie = () => {
-  document.cookie = 'humans_21909=1; path=/; max-age=31536000';
-};
-
-export async function sendLead(lead: Lead): Promise<void> {
-  const options: RequestInit = {
+export async function sendLead(endpoint: string, lead: Lead): Promise<void> {
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(lead)
-  };
-  let response = await fetch('/contacto.php', options);
-  if (response.status === 409) {
-    setHumanCookie();
-    response = await fetch('/contacto.php', options);
-  }
+  });
   const json = (await response.json()) as { ok?: boolean };
-  if (!json.ok) throw new Error('contacto.php respondió sin ok');
+  if (!json.ok) throw new Error(`${endpoint} respondió sin ok`);
 }

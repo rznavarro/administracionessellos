@@ -5,45 +5,54 @@ import FeatureCard from '../ui/FeatureCard.astro';
 import TiltedCard from '../reactbits/TiltedCard';
 
 const pilar = site.pilares.supervision;
+const image = pilar.image;
 ---
 
-<section id={pilar.id} class="cv-auto relative bg-g6 py-24 lg:py-32" style="--cv-h: 2670px; --cv-h-lg: 1430px">
+<section
+  id={pilar.id}
+  class="cv-auto relative bg-g6 py-24 lg:py-32"
+  style={image ? '--cv-h: 2670px; --cv-h-lg: 1430px' : '--cv-h: 2100px; --cv-h-lg: 1050px'}
+>
   <div class="container-x">
     <PillarHeader badge={pilar.badge} title={pilar.title} text={pilar.text} tone="green" />
 
-    <div class="mt-14 grid items-center gap-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
-      <div class="grid gap-3.5 sm:grid-cols-2">
+    <div class:list={['mt-14 grid items-center gap-12', image && 'lg:grid-cols-[1.35fr_1fr] lg:gap-16']}>
+      <div class:list={['grid gap-3.5 sm:grid-cols-2', !image && 'lg:grid-cols-3']}>
         {
           pilar.cards.map((card, i) => (
-            <FeatureCard icon={card.icon} title={card.title} text={card.text} tone="green" layout="stack" delay={(i % 2) * 0.06} />
+            <FeatureCard icon={card.icon} title={card.title} text={card.text} tone="green" layout="stack" delay={(i % 3) * 0.06} />
           ))
         }
       </div>
 
-      <div class="relative mx-auto w-full max-w-[340px]">
-        <div class="pointer-events-none absolute inset-x-6 top-10 bottom-0 -z-10 rounded-[48px] bg-gradient-to-b from-gr2 to-b5 blur-2xl" aria-hidden="true"></div>
-        <TiltedCard
-          client:visible={{ rootMargin: '400px' }}
-          imageSrc={pilar.image.src}
-          altText={pilar.image.alt}
-          containerHeight="600px"
-          containerWidth="100%"
-          imageWidth="290px"
-          imageHeight="580px"
-          radius={42}
-          rotateAmplitude={9}
-          scaleOnHover={1.03}
-          glare={0.35}
-          shadow={0.45}
-          showTooltip={false}
-          gyroscope={false}
-          floating
-        >
-          <span class="pointer-events-none absolute inset-0 z-[4] rounded-[42px] shadow-[inset_0_0_0_9px_#0F1419]" aria-hidden="true"></span>
-          <span class="pointer-events-none absolute left-1/2 top-[18px] z-[4] h-[22px] w-[86px] -translate-x-1/2 rounded-full bg-[#0F1419]" aria-hidden="true"></span>
-        </TiltedCard>
-        <p class="mt-2 text-center text-[12.5px] text-g3">Ejemplo de informe de visita en terreno</p>
-      </div>
+      {
+        image && (
+          <div class="relative mx-auto w-full max-w-[340px]">
+            <div class="pointer-events-none absolute inset-x-6 top-10 bottom-0 -z-10 rounded-[48px] bg-gradient-to-b from-gr2 to-b5 blur-2xl" aria-hidden="true" />
+            <TiltedCard
+              client:visible={{ rootMargin: '400px' }}
+              imageSrc={image.src}
+              altText={image.alt}
+              containerHeight="600px"
+              containerWidth="100%"
+              imageWidth="290px"
+              imageHeight="580px"
+              radius={42}
+              rotateAmplitude={9}
+              scaleOnHover={1.03}
+              glare={0.35}
+              shadow={0.45}
+              showTooltip={false}
+              gyroscope={false}
+              floating
+            >
+              <span class="pointer-events-none absolute inset-0 z-[4] rounded-[42px] shadow-[inset_0_0_0_9px_#0F1419]" aria-hidden="true" />
+              <span class="pointer-events-none absolute left-1/2 top-[18px] z-[4] h-[22px] w-[86px] -translate-x-1/2 rounded-full bg-[#0F1419]" aria-hidden="true" />
+            </TiltedCard>
+            <p class="mt-2 text-center text-[12.5px] text-g3">Ejemplo de informe de visita en terreno</p>
+          </div>
+        )
+      }
     </div>
   </div>
 </section>

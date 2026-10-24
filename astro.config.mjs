@@ -24,7 +24,6 @@ const contactoMock = {
 };
 
 export default defineConfig({
-  site: 'https://administracionesrosello.cl',
   integrations: [react()],
   build: { format: 'directory' },
   vite: { plugins: [tailwindcss(), contactoMock] }

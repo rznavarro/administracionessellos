@@ -9,6 +9,7 @@ import WhatsAppIcon from '../ui/WhatsAppIcon';
 import { PREFILL_EVENT, emptyLead, sendLead, track, type Lead } from '../../lib/leads';
 
 interface Props {
+  endpoint: string;
   title: string;
   subtitle: string;
   submit: string;
@@ -17,6 +18,7 @@ interface Props {
   success: {
     title: string;
     text: string;
+    direct: string;
     whatsapp: string;
     whatsappMessage: string;
     details: string;
@@ -26,7 +28,6 @@ interface Props {
   done: { title: string; text: string };
   options: {
     comite: string[];
-    comuna: string[];
     tipo: string[];
     ascensores: string[];
     calderas: string[];
@@ -223,7 +224,7 @@ export default function HeroForm(props: Props) {
     try {
       // Primer envío: solo contacto. Los campos que el formulario original pedía como
       // obligatorios van marcados para que el correo no llegue con huecos.
-      await sendLead({
+      await sendLead(props.endpoint, {
         ...emptyLead,
         ...lead,
         comite: lead.comite || 'Sin indicar',
@@ -242,7 +243,7 @@ export default function HeroForm(props: Props) {
     setSending(true);
     setError(false);
     try {
-      await sendLead({ ...emptyLead, ...lead, comite: lead.comite || 'Sin indicar', complemento: '1' });
+      await sendLead(props.endpoint, { ...emptyLead, ...lead, comite: lead.comite || 'Sin indicar', complemento: '1' });
       setPhase('done');
     } catch {
       setError(true);
@@ -251,8 +252,8 @@ export default function HeroForm(props: Props) {
     }
   };
 
-  // Botón + window.open, como en el sitio original: /medicion.js ya mide solo los enlaces a wa.me,
-  // así que un <a> contaría el clic dos veces y perdería el origen 'formulario'
+  // Botón + window.open para medir el clic con su origen. Sin número configurado no hay botones
+  const hasWhatsapp = props.whatsapp !== '';
   const openWhatsapp = () => {
     track('whatsapp_click', { origen: 'formulario' });
     const text = props.success.whatsappMessage.replace('{nombre}', lead.nombre || '');
@@ -337,14 +338,7 @@ export default function HeroForm(props: Props) {
                     inputMode="email"
                   />
                 </div>
-                <SelectField
-                  label="Comuna"
-                  name="comuna"
-                  value={lead.comuna}
-                  options={options.comuna}
-                  onChange={update('comuna')}
-                  required
-                />
+                <Field label="Comuna" name="comuna" value={lead.comuna} onChange={update('comuna')} required autoComplete="address-level2" />
                 <ClickSpark sparkColor={['#ffffff', '#9FC3EA', '#4ADE80']} sparkCount={10} sparkRadius={34} className="mt-2">
                   <StarBorder
                     as="button"
@@ -385,15 +379,20 @@ export default function HeroForm(props: Props) {
                 <span className="grid size-8 shrink-0 place-items-center rounded-full bg-[#4ADE80] text-b1">
                   <Check size={18} strokeWidth={2.6} />
                 </span>
-                <p className="text-[14px] leading-relaxed text-white/85">{props.success.text}</p>
+                <p className="text-[14px] leading-relaxed text-white/85">
+                  {props.success.text}
+                  {hasWhatsapp && ` ${props.success.direct}`}
+                </p>
               </div>
-              <button
-                type="button"
-                onClick={openWhatsapp}
-                className="mt-4 flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-wa text-[15px] font-semibold text-[#073b1f] transition hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgb(37_211_102/0.6)]"
-              >
-                <WhatsAppIcon size={19} /> {props.success.whatsapp}
-              </button>
+              {hasWhatsapp && (
+                <button
+                  type="button"
+                  onClick={openWhatsapp}
+                  className="mt-4 flex h-[52px] w-full items-center justify-center gap-2 rounded-xl bg-wa text-[15px] font-semibold text-[#073b1f] transition hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgb(37_211_102/0.6)]"
+                >
+                  <WhatsAppIcon size={19} /> {props.success.whatsapp}
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => setPhase('details')}
@@ -501,13 +500,15 @@ export default function HeroForm(props: Props) {
                   <Check size={28} strokeWidth={2.6} />
                 </span>
                 <p className="max-w-xs text-[14.5px] leading-relaxed text-white/75">{props.done.text}</p>
-                <button
-                  type="button"
-                  onClick={openWhatsapp}
-                  className="mt-5 inline-flex h-12 items-center gap-2 rounded-xl bg-wa px-6 text-[14.5px] font-semibold text-[#073b1f] transition hover:-translate-y-0.5"
-                >
-                  <WhatsAppIcon size={18} /> {props.success.whatsapp}
-                </button>
+                {hasWhatsapp && (
+                  <button
+                    type="button"
+                    onClick={openWhatsapp}
+                    className="mt-5 inline-flex h-12 items-center gap-2 rounded-xl bg-wa px-6 text-[14.5px] font-semibold text-[#073b1f] transition hover:-translate-y-0.5"
+                  >
+                    <WhatsAppIcon size={18} /> {props.success.whatsapp}
+                  </button>
+                )}
               </div>
             </Panel>
           )}

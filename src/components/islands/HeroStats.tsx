@@ -9,7 +9,7 @@ interface Stat {
 
 export default function HeroStats({ stats }: { stats: Stat[] }) {
   return (
-    <dl className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-4">
+    <dl className={`grid grid-cols-2 gap-x-6 gap-y-6 ${stats.length >= 4 ? 'sm:grid-cols-4' : stats.length === 3 ? 'sm:grid-cols-3' : 'max-w-md'}`}>
       {stats.map(stat => (
         <div key={stat.label} className="relative flex flex-col pl-4">
           <span className="absolute inset-y-1 left-0 w-px bg-gradient-to-b from-white/50 to-white/0" aria-hidden="true" />

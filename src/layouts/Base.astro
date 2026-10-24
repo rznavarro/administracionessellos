@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource/instrument-serif/400-italic.css';
+import '@fontsource/instrument-serif/400.css';
 import '../styles/global.css';
 // Se precargan para que el primer layout ya use la fuente final (evita un segundo layout completo al cambiar de fuente)
 import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
@@ -10,21 +11,24 @@ import { plain } from '../lib/rich';
 
 const { seo, brand, contact, comunas, faq } = site;
 
+// Solo se incluyen los campos que tienen datos en site.ts
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: brand.name,
   description: seo.business.description,
-  url: seo.canonical,
-  telephone: contact.phoneHref.replace('tel:', ''),
-  email: contact.email,
-  areaServed: comunas.map(name => ({ '@type': 'City', name })),
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: seo.business.locality,
-    addressRegion: seo.business.region,
-    addressCountry: seo.business.country
-  },
+  ...(seo.canonical && { url: seo.canonical }),
+  ...(contact.phoneHref && { telephone: contact.phoneHref.replace('tel:', '') }),
+  ...(contact.email && { email: contact.email }),
+  ...(comunas.length > 0 && { areaServed: comunas.map(name => ({ '@type': 'City', name })) }),
+  ...(seo.business.locality && {
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: seo.business.locality,
+      addressRegion: seo.business.region,
+      addressCountry: seo.business.country
+    }
+  }),
   priceRange: seo.business.priceRange
 };
 
@@ -45,28 +49,24 @@ const faqPage = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content={seo.googleVerification} />
+    {seo.googleVerification && <meta name="google-site-verification" content={seo.googleVerification} />}
     <script is:inline>
       document.documentElement.classList.remove('no-js');
-      // Cookie anti-bot del hosting: sin ella el POST del formulario rebota con 409
-      document.cookie = 'humans_21909=1; path=/; max-age=31536000';
     </script>
-    <!-- Medición: GA4 + Google Ads + atribución. Vive en el hosting -->
-    <script is:inline src={seo.measurementScript}></script>
+    {seo.measurementScript && <script is:inline src={seo.measurementScript} />}
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <meta property="og:title" content={seo.ogTitle} />
     <meta property="og:description" content={seo.ogDescription} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={seo.canonical} />
+    {seo.canonical && <meta property="og:url" content={seo.canonical} />}
     <meta property="og:locale" content={seo.locale} />
-    <meta property="og:image" content={seo.ogImage} />
-    <meta name="twitter:card" content="summary_large_image" />
+    {seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+    <meta name="twitter:card" content={seo.ogImage ? 'summary_large_image' : 'summary'} />
     <meta name="theme-color" content="#152A45" />
-    <link rel="canonical" href={seo.canonical} />
+    {seo.canonical && <link rel="canonical" href={seo.canonical} />}
     <link rel="icon" type="image/png" href={brand.favicon} />
     <link rel="apple-touch-icon" href={brand.touchIcon} />
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preload" as="font" type="font/woff2" href={jakartaLatin} crossorigin />
     <link rel="preload" as="font" type="font/woff2" href={instrumentItalicLatin} crossorigin />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusiness)} />

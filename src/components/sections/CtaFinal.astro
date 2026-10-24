@@ -6,7 +6,7 @@ import WhatsAppIcon from '../ui/WhatsAppIcon';
 import LightRays from '../reactbits/LightRays';
 import Magnet from '../reactbits/Magnet';
 
-const { cta, brand } = site;
+const { cta, brand, contact } = site;
 ---
 
 <section id="cta" class="cv-auto on-dark relative isolate overflow-hidden bg-[#0E1E33] py-28 text-white lg:py-36" style="--cv-h: 640px; --cv-h-lg: 610px">
@@ -41,12 +41,24 @@ const { cta, brand } = site;
           <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
         </Button>
       </Magnet>
-      <Magnet client:visible padding={70} magnetStrength={5} maxOffset={14}>
-        <Button href={whatsappUrl()} variant="whatsapp" size="lg" target="_blank" rel="noopener noreferrer">
-          <WhatsAppIcon size={19} />
-          {cta.whatsapp}
-        </Button>
-      </Magnet>
+      {
+        contact.whatsapp && (
+          <Magnet client:visible padding={70} magnetStrength={5} maxOffset={14}>
+            <Button
+              href={whatsappUrl()}
+              variant="whatsapp"
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track="whatsapp_click"
+              data-origen="cta"
+            >
+              <WhatsAppIcon size={19} />
+              {cta.whatsapp}
+            </Button>
+          </Magnet>
+        )
+      }
     </div>
   </div>
 </section>
