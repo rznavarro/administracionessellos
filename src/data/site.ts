@@ -14,7 +14,7 @@ export const site = {
     tagline: 'Somos tu norte en Administración',
     favicon: '/favicon-adminor.png',
     touchIcon: '/logo-adminor-touch.png',
-    // Colores que usan los fondos WebGL (Aurora, LightRays). Mantener en sintonía con global.css
+    // Colores que usa el fondo WebGL (LightRays). Mantener en sintonía con global.css
     colors: { navy: '#152A45', blue: '#2D6098', sky: '#7FA7D6', mist: '#D6E4F0', green: '#1F7A4A' },
     // Crédito opcional en el footer (p. ej. la agencia). Vacío = no se muestra
     credit: { label: '', href: '' }

@@ -165,12 +165,9 @@
   @apply font-medium text-b2 underline decoration-b4 decoration-2 underline-offset-4 transition-colors hover:decoration-b3;
 }
 
-/* ===== Hero: degradado de respaldo (se ve antes de que cargue Aurora y con reduced-motion) ===== */
+/* ===== Fondo sólido de las secciones azul marino (hero, cobertura) ===== */
 .hero-fallback {
-  background:
-    radial-gradient(60% 55% at 78% 8%, rgb(45 96 152 / 0.55), transparent 70%),
-    radial-gradient(45% 45% at 12% 90%, rgb(31 122 74 / 0.18), transparent 70%),
-    linear-gradient(180deg, #152a45 0%, #10223a 100%);
+  background: linear-gradient(180deg, #152a45 0%, #112440 100%);
 }
 .grid-lines {
   background-image:

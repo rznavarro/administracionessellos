@@ -5,7 +5,7 @@ Está armado como plantilla: el contenido y la marca viven en un solo archivo.
 
 - **Astro 7** genera el HTML estático, así que todo el contenido queda en el HTML y sirve para SEO.
 - **React 19** se usa solo en las "islas" animadas o interactivas.
-- **React Bits** aporta: Aurora, LightRays, SpotlightCard, StarBorder, ClickSpark, Magnet, LogoLoop y AnimatedContent.
+- **React Bits** aporta: LightRays, SpotlightCard, StarBorder, ClickSpark, Magnet, LogoLoop y AnimatedContent.
 - **Tailwind CSS 4** para los estilos.
 
 ## Comandos
@@ -93,6 +93,3 @@ hosting que lo tenga.
 
 ## Rendimiento
 
-- Aurora arranca con la primera interacción (mover el mouse, scroll, toque o teclado), porque compilar su shader
-  bloquearía la carga. En teléfonos modestos o con ahorro de datos se queda el degradado CSS.
-- Las secciones bajo el pliegue usan `content-visibility: auto` (clase `.cv-auto`, con altos estimados).
