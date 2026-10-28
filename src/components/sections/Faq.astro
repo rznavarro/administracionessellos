@@ -1,55 +1,17 @@
 ---
-import { ArrowRight, Plus } from 'lucide-react';
-import { site, whatsappUrl } from '../../data/site';
+import { Plus } from 'lucide-react';
+import { site } from '../../data/site';
 import { rich } from '../../lib/rich';
 import SectionHeader from '../ui/SectionHeader.astro';
-import WhatsAppIcon from '../ui/WhatsAppIcon';
 
-const { faq, contact } = site;
+const { faq } = site;
 ---
 
-<section id="faq" class="cv-auto relative bg-g6 py-24 lg:py-32" style="--cv-h: 1770px; --cv-h-lg: 1280px">
-  <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-    <div class="lg:sticky lg:top-32 lg:self-start">
-      <SectionHeader tag={faq.tag} title={faq.title} />
-      <div class="rv mt-8 rounded-2xl border border-g4/70 bg-white p-6 shadow-[var(--shadow-soft)]" data-delay="0.15">
-        <h3 class="text-[16px] font-semibold text-g1">{faq.helpTitle}</h3>
-        <p class="mt-1.5 text-[14px] leading-relaxed text-g3">{faq.helpText}</p>
-        {
-          contact.whatsapp ? (
-            <a
-              href={whatsappUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-track="whatsapp_click"
-              data-origen="faq"
-              class="mt-5 inline-flex h-11 items-center gap-2 rounded-xl bg-wa px-5 text-[14px] font-semibold text-[#073b1f] transition hover:-translate-y-0.5"
-            >
-              <WhatsAppIcon size={17} /> Escríbenos por WhatsApp
-            </a>
-          ) : (
-            <a
-              href="#form"
-              class="mt-5 inline-flex h-11 items-center gap-2 rounded-xl bg-b1 px-5 text-[14px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-b2"
-            >
-              Déjanos tu consulta <ArrowRight size={16} aria-hidden="true" />
-            </a>
-          )
-        }
-        {
-          contact.phoneHref && (
-            <p class="mt-4 text-[13px] text-g3">
-              o llámanos al{' '}
-              <a href={contact.phoneHref} class="font-medium text-b2 hover:underline">
-                {contact.phoneDisplay}
-              </a>
-            </p>
-          )
-        }
-      </div>
-    </div>
+<section id="faq" class="cv-auto relative bg-g6 py-20 lg:py-24" style="--cv-h: 900px; --cv-h-lg: 640px">
+  <div class="container-x max-w-3xl">
+    <SectionHeader tag={faq.tag} title={faq.title} align="center" />
 
-    <div class="divide-y divide-g4/70 rounded-2xl border border-g4/70 bg-white px-5 shadow-[var(--shadow-soft)] sm:px-8">
+    <div class="mt-12 divide-y divide-g4/70 rounded-2xl border border-g4/70 bg-white px-5 shadow-[var(--shadow-soft)] sm:px-8">
       {
         faq.items.map(item => (
           <details name="faq" class="faq-item group">

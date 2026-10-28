@@ -21,10 +21,10 @@ const { nav, contact } = site;
   )
 }
 
-<!-- Barra fija móvil: aparece cuando el formulario de la hero ya no está en pantalla -->
+<!-- Barra fija móvil: visible desde el inicio; se oculta mientras el formulario ocupa la pantalla o se ve el footer -->
 <div
   id="mobile-cta"
-  class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-g4/70 bg-white/90 px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition-transform duration-500 ease-out data-[show]:translate-y-0 lg:hidden"
+  class="fixed inset-x-0 bottom-0 z-40 border-t border-g4/70 bg-white/90 px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition-transform duration-500 ease-out data-[hide]:translate-y-full lg:hidden"
 >
   <div class="mx-auto flex max-w-md gap-2.5">
     <a href={nav.cta.href} class="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-b1 text-[14px] font-semibold text-white">
@@ -48,19 +48,21 @@ const { nav, contact } = site;
 </div>
 
 <script>
-  // Barra móvil: visible cuando ni el formulario ni el footer están en pantalla
+  // Barra móvil: oculta mientras el formulario está más de la mitad en pantalla o el footer es visible
   const bar = document.getElementById('mobile-cta');
   const form = document.getElementById('form');
   const footer = document.querySelector('footer');
   if (bar && form && 'IntersectionObserver' in window) {
     const latest = new Map<Element, IntersectionObserverEntry>();
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => latest.set(entry.target, entry));
-      const formEntry = latest.get(form);
-      // El formulario quedó arriba (ya se pasó): su borde inferior está sobre la pantalla
-      const formOut = Boolean(formEntry && !formEntry.isIntersecting && formEntry.boundingClientRect.bottom < 0);
-      bar.toggleAttribute('data-show', formOut && !latest.get(footer as Element)?.isIntersecting);
-    });
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => latest.set(entry.target, entry));
+        const formCovers = (latest.get(form)?.intersectionRatio ?? 0) > 0.5;
+        const footerShown = latest.get(footer as Element)?.isIntersecting ?? false;
+        bar.toggleAttribute('data-hide', formCovers || footerShown);
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
     observer.observe(form);
     if (footer) observer.observe(footer);
   }

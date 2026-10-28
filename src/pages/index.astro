@@ -2,15 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/sections/Nav.astro';
 import Hero from '../components/sections/Hero.astro';
-import Dolor from '../components/sections/Dolor.astro';
+import Beneficios from '../components/sections/Beneficios.astro';
 import Modelo from '../components/sections/Modelo.astro';
-import Compromiso from '../components/sections/Compromiso.astro';
-import PilarSupervision from '../components/sections/PilarSupervision.astro';
-import PilarFinanzas from '../components/sections/PilarFinanzas.astro';
-import PilarSeguridad from '../components/sections/PilarSeguridad.astro';
-import GastoComun from '../components/sections/GastoComun.astro';
 import Testimonios from '../components/sections/Testimonios.astro';
-import Autoevaluacion from '../components/sections/Autoevaluacion.astro';
 import Cobertura from '../components/sections/Cobertura.astro';
 import Faq from '../components/sections/Faq.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
@@ -23,15 +17,10 @@ import Floating from '../components/sections/Floating.astro';
   <Nav />
   <main>
     <Hero />
-    <Dolor />
+    <Beneficios />
     <Modelo />
-    <Compromiso />
-    <PilarSupervision />
-    <PilarFinanzas />
-    <PilarSeguridad />
-    <GastoComun />
+    <!-- Testimonios, cobertura y recursos se muestran solo cuando tienen datos en site.ts -->
     <Testimonios />
-    <Autoevaluacion />
     <Cobertura />
     <Faq />
     <CtaFinal />

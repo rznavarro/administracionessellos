@@ -5,9 +5,7 @@ Está armado como plantilla: el contenido y la marca viven en un solo archivo.
 
 - **Astro 7** genera el HTML estático, así que todo el contenido queda en el HTML y sirve para SEO.
 - **React 19** se usa solo en las "islas" animadas o interactivas.
-- **React Bits** aporta: Aurora, LightRays, MagicBento, SpotlightCard, TiltedCard, Stepper, StarBorder, ClickSpark,
-  Magnet, RotatingText, ShinyText, GradientText, CountUp, ScrollReveal, ScrollVelocity, CurvedLoop, LogoLoop,
-  AnimatedContent y StaggeredMenu.
+- **React Bits** aporta: Aurora, LightRays, SpotlightCard, StarBorder, ClickSpark, Magnet, LogoLoop y AnimatedContent.
 - **Tailwind CSS 4** para los estilos.
 
 ## Comandos
@@ -39,11 +37,9 @@ Todo se edita en [src/data/site.ts](src/data/site.ts). Lo que queda vacío no se
 | Endpoint del formulario | `form.endpoint` (por defecto `/contacto.php`) | Recibe un POST JSON y debe responder `{"ok": true}` |
 | Testimonios | `testimonios.items` | Sección de testimonios |
 | Guías PDF | `recursos.items` (archivos en `public/`) | Sección de recursos |
-| Capturas de los pilares | `pilares.supervision.image`, `pilares.finanzas.image` | Teléfono con un informe y navegador con la plataforma |
-| Cifras de la hero | `hero.stats` | Por ejemplo, años de experiencia y comunidades |
 | Redes, enlaces legales, crédito | `socials`, `footer.legal`, `brand.credit` | Footer |
 
-Los textos de servicio son contenido de plantilla y hay que validarlos con ADMINOR. Por ejemplo: respuesta en
+Los textos de servicio (respuesta en 24 h, visita semanal, informe con fotos) son contenido de plantilla y hay que validarlos con ADMINOR. Por ejemplo: respuesta en
 menos de 24 horas, visitas semanales, supervisión 24/7 y convenios de seguridad. La foto de la hero
 (`public/edificio-residencial.webp`) es genérica; si existe una propia, conviene reemplazarla junto con su
 versión de 640 px.
@@ -57,41 +53,35 @@ versión de 640 px.
   WebGL usan además `brand.colors` en `site.ts`; hay que mantener ambos sincronizados.
 - **Íconos:** se nombran en `site.ts` y se registran en [src/lib/icons.ts](src/lib/icons.ts) (Lucide).
 
-## Estructura
+## Estructura de la página
+
+La página es corta y va directo a la conversión: **5 bloques**, todos con un CTA al formulario o a WhatsApp.
+
+1. **Hero:** propuesta de valor, 3 beneficios y formulario de 3 campos (nombre, teléfono y correo).
+2. **Por qué ADMINOR:** 4 beneficios de una línea.
+3. **Cómo funciona:** 3 pasos.
+4. **Preguntas clave:** 5 objeciones (se genera también el JSON-LD de FAQPage).
+5. **CTA final.**
+
+Los testimonios, la cobertura y los recursos (guías PDF) se muestran solo cuando tienen datos en `site.ts`.
 
 ```
 src/data/site.ts            contenido y marca
 src/layouts/Base.astro      <head>: SEO, OG, JSON-LD, analítica opcional y fuentes
 src/pages/index.astro       orden de las secciones
 src/components/sections/    una sección por archivo (.astro, HTML estático)
-src/components/islands/     componentes React con estado (formulario, test, menú, etc.)
-src/components/reactbits/   componentes copiados de React Bits (algunos adaptados, ver abajo)
+src/components/islands/     componentes React con estado (formulario, fondo, línea de tiempo, testimonios)
+src/components/reactbits/   componentes copiados de React Bits
 src/components/ui/          botón, encabezados, tarjetas, carpeta de recursos
 src/lib/leads.ts            envío del formulario (POST JSON a form.endpoint)
 ```
 
-Cambios hechos a los componentes de React Bits:
-
-- **MagicBento:** sin los gráficos de demostración ni `@hugeicons`.
-- **Stepper:** íconos de Lucide.
-- **StaggeredMenu:** textos en español, logo opcional, se cierra al elegir un enlace, `inert` cuando está cerrado
-  y oculto antes de hidratar.
-- **ScrollReveal:** prop `text`, etiqueta configurable y palabras marcadas con `**`.
-- **GradientText:** modo `inline`.
-- **CurvedLoop:** alto configurable.
-- **TiltedCard:** imagen con lazy loading.
-- **Folder:** la versión actual de React Bits es un motor WebGL de unas 2.500 líneas. En su lugar,
-  [src/components/ui/FolderLite.astro](src/components/ui/FolderLite.astro) es una versión CSS con el mismo efecto.
-
 ## Formulario
 
-La hero envía el lead con 4 campos (nombre, teléfono, correo y comuna) y luego ofrece completar los detalles.
-Son **dos POST** al endpoint:
-
-- El primero llega con `comite` y `tipo` = `"Sin indicar"`.
-- El segundo agrega `complemento: "1"`.
-
-Si la página tiene `gtag`, se dispara `generate_lead` una vez y `whatsapp_click` en los botones de WhatsApp.
+El formulario pide solo **nombre, teléfono y correo**: menos campos, más conversión. Hace **un POST** al endpoint
+(`form.endpoint`). Los campos que el servidor puede exigir, y que ya no se piden (`comuna`, `comite`, `tipo`),
+viajan como `"Sin indicar"`; el resto del contrato JSON no cambia. Si la página tiene `gtag`, se dispara
+`generate_lead` una vez y `whatsapp_click` en los botones de WhatsApp.
 
 ## Despliegue
 

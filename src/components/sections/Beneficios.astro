@@ -1,0 +1,30 @@
+---
+import { ArrowRight } from 'lucide-react';
+import { site } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import FeatureCard from '../ui/FeatureCard.astro';
+import Button from '../ui/Button.astro';
+
+const { beneficios } = site;
+---
+
+<section id="beneficios" class="cv-auto relative bg-white py-20 lg:py-24" style="--cv-h: 900px; --cv-h-lg: 520px">
+  <div class="container-x">
+    <SectionHeader tag={beneficios.tag} title={beneficios.title} align="center" />
+
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        beneficios.items.map((item, i) => (
+          <FeatureCard icon={item.icon} title={item.title} text={item.text} tone="blue" layout="stack" delay={i * 0.06} />
+        ))
+      }
+    </div>
+
+    <div class="rv mt-10 text-center" data-delay="0.2">
+      <Button href="#form" variant="primary" size="lg">
+        {beneficios.cta}
+        <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
+      </Button>
+    </div>
+  </div>
+</section>

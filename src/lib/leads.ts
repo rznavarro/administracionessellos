@@ -18,8 +18,6 @@ export interface Lead {
   importante: string;
   // Honeypot anti-spam: siempre vacío para personas
   web: string;
-  // '1' cuando es el segundo envío con los detalles de la comunidad
-  complemento?: string;
 }
 
 export const emptyLead: Lead = {
@@ -39,9 +37,6 @@ export const emptyLead: Lead = {
   importante: '',
   web: ''
 };
-
-// Evento con el que la autoevaluación precarga el motivo en el formulario de la hero
-export const PREFILL_EVENT = 'adminor:prefill';
 
 declare global {
   interface Window {
