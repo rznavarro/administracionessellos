@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import { site, whatsappUrl } from '../../data/site';
+import { imagen } from '../../data/images';
 import { icons } from '../../lib/icons';
 import HeroForm from '../islands/HeroForm';
 import Button from '../ui/Button.astro';
@@ -9,19 +11,21 @@ const { hero, form, contact } = site;
 ---
 
 <section id="inicio" class="on-dark relative isolate overflow-hidden bg-[#1a1a1a] text-white">
-  <img
-    src={hero.image.src}
-    srcset={[...hero.image.variants, { src: hero.image.src, width: hero.image.width }].map(v => `${v.src} ${v.width}w`).join(', ')}
-    sizes="100vw"
+  <!-- La foto es el LCP: carga con prioridad. El lado izquierdo de la imagen es oscuro y queda bajo el texto -->
+  <Picture
+    src={imagen(hero.image.name)}
     alt={hero.image.alt}
-    width={hero.image.width}
-    height={hero.image.height}
+    formats={['avif', 'webp']}
+    fallbackFormat="webp"
+    widths={[640, 960, 1440, 1920]}
+    sizes="100vw"
+    loading="eager"
     fetchpriority="high"
     decoding="async"
-    class="absolute inset-0 -z-20 h-full w-full object-cover object-[70%_center]"
+    class="absolute inset-0 -z-20 h-full w-full object-cover object-[68%_center]"
   />
   <!-- Sombra neutra (sin tinte azul) para que el texto blanco se lea sobre la foto -->
-  <div class="absolute inset-0 -z-10 bg-black/55 lg:bg-gradient-to-r lg:from-black/70 lg:via-black/50 lg:to-black/25" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 bg-black/40 lg:bg-gradient-to-r lg:from-black/55 lg:via-black/30 lg:to-black/20" aria-hidden="true"></div>
 
   <!-- Móvil: titular → formulario → beneficios. Escritorio: texto a la izquierda y formulario a la derecha -->
   <div class="container-x grid gap-x-12 gap-y-8 pb-14 pt-24 sm:pt-28 lg:grid-cols-12 lg:items-center lg:pb-20 lg:pt-32">

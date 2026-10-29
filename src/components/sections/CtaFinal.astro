@@ -1,31 +1,29 @@
 ---
+import { Picture } from 'astro:assets';
 import { ArrowRight } from 'lucide-react';
 import { site, whatsappUrl } from '../../data/site';
+import { imagen } from '../../data/images';
 import Button from '../ui/Button.astro';
 import WhatsAppIcon from '../ui/WhatsAppIcon';
-import LightRays from '../reactbits/LightRays';
 import Magnet from '../reactbits/Magnet';
 
-const { cta, brand, contact } = site;
+const { cta, contact } = site;
 ---
 
-<section id="cta" class="cv-auto on-dark relative isolate overflow-hidden bg-[#0E1E33] py-20 text-white lg:py-24" style="--cv-h: 520px; --cv-h-lg: 460px">
-  <div class="absolute inset-0 -z-10" aria-hidden="true">
-    <LightRays
-      client:visible
-      raysOrigin="top-center"
-      raysColor={brand.colors.mist}
-      raysSpeed={0.8}
-      lightSpread={0.9}
-      rayLength={1.6}
-      intensity={0.9}
-      followMouse
-      mouseInfluence={0.08}
-      cursorShadow={false}
-      clickPulse={false}
-    />
-  </div>
-  <div class="grid-lines pointer-events-none absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
+<section id="cta" class="cv-auto on-dark relative isolate overflow-hidden bg-[#0B1626] py-24 text-white lg:py-32" style="--cv-h: 560px; --cv-h-lg: 520px">
+  <Picture
+    src={imagen(cta.image.name)}
+    alt={cta.image.alt}
+    formats={['avif', 'webp']}
+    fallbackFormat="webp"
+    widths={[640, 960, 1440, 1920]}
+    sizes="100vw"
+    loading="lazy"
+    decoding="async"
+    class="absolute inset-0 -z-20 h-full w-full object-cover"
+  />
+  <!-- Capa oscura neutra: la foto es cálida y el texto blanco tiene que leerse -->
+  <div class="absolute inset-0 -z-10 bg-black/60" aria-hidden="true"></div>
 
   <div class="container-x max-w-3xl text-center">
     <h2 class="rv text-balance text-[clamp(2rem,4.8vw,3.3rem)] font-bold leading-[1.06] tracking-[-0.035em]">

@@ -1,0 +1,46 @@
+---
+import { Picture } from 'astro:assets';
+import { ArrowRight } from 'lucide-react';
+import { site } from '../../data/site';
+import { imagen } from '../../data/images';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Button from '../ui/Button.astro';
+
+const { cubrimos } = site;
+---
+
+<section id="cubrimos" class="cv-auto relative bg-white py-20 lg:py-24" style="--cv-h: 1500px; --cv-h-lg: 800px">
+  <div class="container-x">
+    <SectionHeader tag={cubrimos.tag} title={cubrimos.title} align="center" />
+
+    <div class="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+      {
+        cubrimos.items.map((item, i) => (
+          <figure class="rv group relative aspect-[4/3] overflow-hidden rounded-2xl bg-g5" data-delay={String((i % 3) * 0.06)}>
+            <Picture
+              src={imagen(item.foto)}
+              alt={item.alt}
+              formats={['avif', 'webp']}
+    fallbackFormat="webp"
+              widths={[480, 720, 960]}
+              sizes="(min-width: 1024px) 380px, 46vw"
+              loading="lazy"
+              decoding="async"
+              class="size-full object-cover transition duration-700 ease-out group-hover:scale-105"
+            />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent px-4 pb-3.5 pt-12 text-[13.5px] font-semibold leading-tight text-white sm:text-[15px]">
+              {item.label}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <div class="rv mt-10 text-center" data-delay="0.2">
+      <Button href="#form" variant="primary" size="lg">
+        {cubrimos.cta}
+        <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
+      </Button>
+    </div>
+  </div>
+</section>

@@ -5,7 +5,7 @@ Está armado como plantilla: el contenido y la marca viven en un solo archivo.
 
 - **Astro 7** genera el HTML estático, así que todo el contenido queda en el HTML y sirve para SEO.
 - **React 19** se usa solo en las "islas" animadas o interactivas.
-- **React Bits** aporta: LightRays, SpotlightCard, StarBorder, ClickSpark, Magnet, LogoLoop y AnimatedContent.
+- **React Bits** aporta: SpotlightCard, StarBorder, ClickSpark, Magnet, LogoLoop y AnimatedContent.
 - **Tailwind CSS 4** para los estilos.
 
 ## Comandos
@@ -40,9 +40,9 @@ Todo se edita en [src/data/site.ts](src/data/site.ts). Lo que queda vacío no se
 | Redes, enlaces legales, crédito | `socials`, `footer.legal`, `brand.credit` | Footer |
 
 Los textos de servicio (respuesta en 24 h, visita semanal, informe con fotos) son contenido de plantilla y hay que validarlos con ADMINOR. Por ejemplo: respuesta en
-menos de 24 horas, visitas semanales, supervisión 24/7 y convenios de seguridad. La foto de la hero
-(`public/edificio-residencial.webp`) es genérica; si existe una propia, conviene reemplazarla junto con su
-versión de 640 px.
+menos de 24 horas, visitas semanales, supervisión 24/7 y convenios de seguridad. Las personas de las fotos
+parecen generadas con IA: no se presentan como "nuestro equipo" ni como clientes, y conviene reemplazarlas por
+fotos propias cuando existan.
 
 ## Marca
 
@@ -55,13 +55,14 @@ versión de 640 px.
 
 ## Estructura de la página
 
-La página es corta y va directo a la conversión: **5 bloques**, todos con un CTA al formulario o a WhatsApp.
+La página es corta y va directo a la conversión: **6 bloques**, todos con un CTA al formulario o a WhatsApp.
 
 1. **Hero:** propuesta de valor, 3 beneficios y formulario de 3 campos (nombre, teléfono y correo).
-2. **Por qué ADMINOR:** 4 beneficios de una línea.
-3. **Cómo funciona:** 3 pasos.
-4. **Preguntas clave:** 5 objeciones (se genera también el JSON-LD de FAQPage).
-5. **CTA final.**
+2. **Por qué ADMINOR:** 4 tarjetas con foto.
+3. **Cómo funciona:** 3 pasos junto a una foto.
+4. **Qué cubrimos:** mosaico de 6 fotos (ascensores, accesos, proveedores, visita semanal, edificios, condominios).
+5. **Preguntas clave:** 5 objeciones (se genera también el JSON-LD de FAQPage).
+6. **CTA final** con foto de fondo.
 
 Los testimonios, la cobertura y los recursos (guías PDF) se muestran solo cuando tienen datos en `site.ts`.
 
@@ -75,6 +76,16 @@ src/components/reactbits/   componentes copiados de React Bits
 src/components/ui/          botón, encabezados, tarjetas, carpeta de recursos
 src/lib/leads.ts            envío del formulario (POST JSON a form.endpoint)
 ```
+
+## Imágenes
+
+Los originales (PNG pesados) van en `Imagenes/`, que **no se sube al repositorio**. `npm run imagenes` los convierte a
+WebP (máx. 1920 px) en `src/assets/imagenes/` y genera `public/og.jpg` (1200×630, desde la foto 01). Astro sirve
+cada foto en AVIF/WebP con varios anchos.
+
+Para cambiar una foto: reemplaza el PNG en `Imagenes/` con el mismo nombre, ejecuta `npm run imagenes` y listo. Para
+usar otra, agrégala, ejecuta el script y referencia su nombre (sin extensión) y su `alt` en
+[src/data/site.ts](src/data/site.ts). `public/og.jpg` se usa en `seo.ogImage` cuando exista el dominio.
 
 ## Formulario
 

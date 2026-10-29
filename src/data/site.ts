@@ -77,17 +77,10 @@ export const site = {
       { icon: 'calendarCheck', label: 'Visita semanal con informe' },
       { icon: 'receipt', label: 'Gasto común transparente' }
     ] as { icon: IconName; label: string }[],
-    // Foto de fondo de la hero (va al 22% de opacidad y en modo luminosidad: basta en escala de grises).
-    // `variants`: versiones más chicas para el srcset
+    // Foto de fondo de la hero: nombre del archivo en src/assets/imagenes (sin extensión)
     image: {
-      src: '/edificio-residencial.webp',
-      variants: [
-        { src: '/edificio-residencial-640.webp', width: 640 },
-        { src: '/edificio-residencial-960.webp', width: 960 }
-      ],
-      alt: 'Edificio residencial',
-      width: 1100,
-      height: 1320
+      name: '01-edificio-residencial-hero',
+      alt: 'Fachada de un edificio residencial moderno con jardines'
     }
   },
 
@@ -113,16 +106,33 @@ export const site = {
     tag: '¿Por qué ADMINOR?',
     title: 'Lo que recibe tu comunidad',
     cta: 'Pedir propuesta',
+    // `foto`: nombre del archivo en src/assets/imagenes (sin extensión)
     items: [
-      { icon: 'mailCheck', title: 'Respuesta en 24 horas', text: 'Toda solicitud tiene respuesta en menos de un día.' },
-      { icon: 'calendarCheck', title: 'Informe semanal con fotos', text: 'Visita en terreno cada semana, documentada para el comité.' },
       {
-        icon: 'receipt',
+        foto: '08-control-accesos',
+        alt: 'Residente con su perro siendo recibida por el conserje en el lobby',
+        title: 'Respuesta en 24 horas',
+        text: 'Toda solicitud tiene respuesta en menos de un día.'
+      },
+      {
+        foto: '04-revision-informe',
+        alt: 'Checklist de una visita en una tablet junto a un informe impreso',
+        title: 'Informe semanal con fotos',
+        text: 'Visita en terreno cada semana, documentada para el comité.'
+      },
+      {
+        foto: '11-gasto-comun-transparente',
+        alt: 'Planilla de gastos comunes con gráficos en un computador',
         title: 'Gasto común claro',
         text: 'Cada cobro revisado, cada variación explicada y fondo de reserva (Art. 39, Ley 21.442).'
       },
-      { icon: 'wrench', title: 'Mantenciones al día', text: 'Ascensores, calderas y gas con calendario preventivo.' }
-    ] as { icon: IconName; title: string; text: string }[]
+      {
+        foto: '07-mantencion-caldera',
+        alt: 'Técnico revisando la sala de calderas de un edificio',
+        title: 'Mantenciones al día',
+        text: 'Ascensores, calderas y gas con calendario preventivo.'
+      }
+    ] as { foto: string; alt: string; title: string; text: string }[]
   },
 
   modelo: {
@@ -132,7 +142,27 @@ export const site = {
       { icon: 'clipboardList', title: 'Déjanos tus datos', text: 'Completa el formulario en menos de un minuto.' },
       { icon: 'badgeCheck', title: 'Recibe tu propuesta', text: 'Te contactamos en menos de 24 horas con una propuesta a la medida.' },
       { icon: 'handshake', title: 'Nos hacemos cargo', text: 'Acompañamos todo el traspaso: asamblea, documentos y proveedores.' }
-    ] as { icon: IconName; title: string; text: string }[]
+    ] as { icon: IconName; title: string; text: string }[],
+    image: {
+      name: '14-traspaso-documentos',
+      alt: 'Apretón de manos entre una administradora y un cliente al cerrar un acuerdo',
+      badge: 'Respuesta en menos de 24 horas'
+    }
+  },
+
+  // Mosaico de fotos que responde "¿administran lo mío?"
+  cubrimos: {
+    tag: 'Qué cubrimos',
+    title: 'Todo lo que tu edificio necesita',
+    cta: 'Pedir propuesta',
+    items: [
+      { foto: '03-administrador-visita', alt: 'Persona con una tablet recorriendo el lobby de un edificio', label: 'Visita semanal en terreno' },
+      { foto: '06-mantencion-ascensor', alt: 'Técnico con una tablet junto a la máquina de un ascensor', label: 'Ascensores' },
+      { foto: '09-porteria-segura', alt: 'Entrada iluminada de un edificio al anochecer, con conserjería', label: 'Seguridad y accesos' },
+      { foto: '10-proveedores-coordinacion', alt: 'Administradora y técnico revisando una tablet junto al ascensor', label: 'Proveedores coordinados' },
+      { foto: '02-condominio-jardines', alt: 'Edificio con jardines, vecinos y una mascota paseando', label: 'Edificios' },
+      { foto: '13-condominio-casas', alt: 'Condominio con senderos, jardines y portón de acceso', label: 'Condominios de casas' }
+    ] as { foto: string; alt: string; label: string }[]
   },
 
   testimonios: {
@@ -179,7 +209,11 @@ export const site = {
     title: '¿Listo para una administración más clara?',
     text: 'Déjanos tus datos y recibe tu propuesta en menos de 24 horas.',
     primary: 'Pedir mi propuesta gratis',
-    whatsapp: 'Escribir por WhatsApp'
+    whatsapp: 'Escribir por WhatsApp',
+    image: {
+      name: '15-edificio-atardecer',
+      alt: 'Fachada de un edificio residencial al atardecer, con luces cálidas'
+    }
   },
 
   recursos: {

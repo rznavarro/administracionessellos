@@ -133,10 +133,11 @@ export default function HeroForm(props: Props) {
       intensity={0.22}
       borderGlow={0.9}
       spotlightSize={320}
-      className="backdrop-blur-xl"
+      className="backdrop-blur-2xl"
       style={
         {
-          '--spotlight-card-surface': 'linear-gradient(160deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04))',
+          // La tarjeta lo usa como background-color: tiene que ser un color, no un degradado
+          '--spotlight-card-surface': 'rgba(10, 20, 36, 0.66)',
           '--spotlight-card-border': 'rgba(255, 255, 255, 0.16)',
           '--spotlight-card-shadow': '0 40px 80px -40px rgba(0, 0, 0, 0.65)',
           padding: 'clamp(22px, 4vw, 32px)'

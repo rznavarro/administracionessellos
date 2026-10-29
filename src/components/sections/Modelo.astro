@@ -1,17 +1,43 @@
 ---
+import { Picture } from 'astro:assets';
+import { MailCheck } from 'lucide-react';
 import { site } from '../../data/site';
+import { imagen } from '../../data/images';
 import SectionHeader from '../ui/SectionHeader.astro';
 import ModeloTimeline from '../islands/ModeloTimeline';
 
 const { modelo } = site;
 ---
 
-<section id="modelo" class="cv-auto relative overflow-hidden bg-b5 py-20 lg:py-24" style="--cv-h: 900px; --cv-h-lg: 700px">
+<section id="modelo" class="cv-auto relative overflow-hidden bg-b5 py-20 lg:py-24" style="--cv-h: 1500px; --cv-h-lg: 720px">
   <div class="pointer-events-none absolute -right-40 -top-40 size-[520px] rounded-full bg-white/60 blur-3xl" aria-hidden="true"></div>
   <div class="container-x relative">
     <SectionHeader tag={modelo.tag} title={modelo.title} align="center" />
-    <div class="mx-auto mt-12 max-w-2xl rounded-[28px] bg-white/70 p-6 shadow-[var(--shadow-soft)] ring-1 ring-white backdrop-blur sm:p-10">
-      <ModeloTimeline client:visible={{ rootMargin: '400px' }} steps={modelo.steps} />
+
+    <div class="mt-12 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+      <div class="rounded-[28px] bg-white/70 p-6 shadow-[var(--shadow-soft)] ring-1 ring-white backdrop-blur sm:p-10">
+        <ModeloTimeline client:visible={{ rootMargin: '400px' }} steps={modelo.steps} />
+      </div>
+
+      <div class="rv relative" data-delay="0.1">
+        <div class="aspect-[4/3] overflow-hidden rounded-[28px] bg-g5 shadow-[var(--shadow-lift)]">
+          <Picture
+            src={imagen(modelo.image.name)}
+            alt={modelo.image.alt}
+            formats={['avif', 'webp']}
+    fallbackFormat="webp"
+            widths={[640, 960, 1280]}
+            sizes="(min-width: 1024px) 560px, 92vw"
+            loading="lazy"
+            decoding="async"
+            class="size-full object-cover"
+          />
+        </div>
+        <p class="absolute -bottom-4 left-5 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-[13.5px] font-semibold text-b1 shadow-[var(--shadow-lift)] sm:left-8">
+          <MailCheck size={16} className="text-gr" aria-hidden="true" />
+          {modelo.image.badge}
+        </p>
+      </div>
     </div>
   </div>
 </section>
