@@ -1,6 +1,6 @@
 ---
 import { Phone } from 'lucide-react';
-import { site } from '../../data/site';
+import { site, whatsappUrl } from '../../data/site';
 
 const { brand, nav, contact } = site;
 ---
@@ -21,10 +21,14 @@ const { brand, nav, contact } = site;
         )
       }
       <a
-        href={nav.cta.href}
+        href={contact.whatsapp ? whatsappUrl() : nav.cta.href}
+        target={contact.whatsapp ? '_blank' : undefined}
+        rel={contact.whatsapp ? 'noopener noreferrer' : undefined}
+        data-track={contact.whatsapp ? 'whatsapp_click' : undefined}
+        data-origen="nav"
         class="rounded-xl bg-white px-4 py-2.5 text-[13.5px] font-semibold text-b1 shadow-[0_8px_24px_-10px_rgb(0_0_0/0.5)] transition hover:-translate-y-0.5 lg:px-5"
       >
-        {nav.cta.label}
+        {contact.whatsapp ? 'WhatsApp' : nav.cta.label}
       </a>
     </div>
   </div>

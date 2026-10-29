@@ -23,11 +23,20 @@ export const site = {
   // Datos de contacto de ADMINOR (pendientes). Todo campo vacío oculta lo que depende de él:
   // sin `whatsapp` no hay botones de WhatsApp; sin `phoneHref` no se muestra el teléfono, etc.
   contact: {
-    phoneDisplay: '', // ej. '+56 9 1234 5678'
-    phoneHref: '', // ej. 'tel:+56912345678'
-    whatsapp: '', // solo dígitos con código de país, ej. '56912345678'
+    // Datos de la tarjeta de presentación de Adán Caicedo Herrera
+    contactName: 'Adán Caicedo Herrera',
+    contactRole: 'Administración & Gestión Inmobiliaria',
+    phoneDisplay: '2 2556 8281', // teléfono oficina directo
+    phoneHref: 'tel:+56225568281',
+    whatsapp: '56976551128', // solo dígitos con código de país
+    whatsappDisplay: '+56 9 7655 1128',
     whatsappMessage: 'Hola, quiero saber más sobre la administración de mi comunidad.',
-    email: '',
+    email: 'adan.caicedo@gmail.com',
+    // Correos por oficina, se muestran en el footer
+    offices: [
+      { city: 'Santiago', email: 'adan.caicedo@gmail.com' },
+      { city: 'Antofagasta', email: 'portal.gestionar.antofagasta@gmail.com' }
+    ] as { city: string; email: string }[],
     hours: '',
     // Inscripción en el Registro Nacional de Administradores (Ley 21.442), ej. 'Ley 21.442 · Registro Nacional de Administradores'
     // DEMO: reemplazar por la inscripción real antes de publicar
@@ -37,7 +46,7 @@ export const site = {
   },
 
   // Redes sociales. Vacías = no se muestran
-  socials: [] as { label: string; href: string }[],
+  socials: [{ label: 'Instagram @adminor_tucondominio', href: 'https://www.instagram.com/adminor_tucondominio' }] as { label: string; href: string }[],
 
   // Comunas donde opera ADMINOR. Vacío = no se muestra la sección de cobertura
   comunas: [] as string[],

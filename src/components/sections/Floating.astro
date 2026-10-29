@@ -27,20 +27,21 @@ const { nav, contact } = site;
   class="fixed inset-x-0 bottom-0 z-40 border-t border-g4/70 bg-white/90 px-3 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 backdrop-blur-xl transition-transform duration-500 ease-out data-[hide]:translate-y-full lg:hidden"
 >
   <div class="mx-auto flex max-w-md gap-2.5">
-    <a href={nav.cta.href} class="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-b1 text-[14px] font-semibold text-white">
-      {nav.cta.label}
-    </a>
     {
-      contact.whatsapp && (
+      contact.whatsapp ? (
         <a
           href={whatsappUrl()}
           target="_blank"
           rel="noopener noreferrer"
           data-track="whatsapp_click"
           data-origen="barra_movil"
-          class="flex h-12 items-center justify-center gap-2 rounded-xl bg-wa px-5 text-[14px] font-semibold text-[#073b1f]"
+          class="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-wa text-[14px] font-semibold text-[#073b1f]"
         >
-          <WhatsAppIcon size={18} /> WhatsApp
+          <WhatsAppIcon size={18} /> Escribir por WhatsApp
+        </a>
+      ) : (
+        <a href={nav.cta.href} class="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-b1 text-[14px] font-semibold text-white">
+          {nav.cta.label}
         </a>
       )
     }

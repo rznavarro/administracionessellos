@@ -1,10 +1,10 @@
 ---
 import { Picture } from 'astro:assets';
-import { ArrowRight } from 'lucide-react';
-import { site } from '../../data/site';
+import { site, whatsappUrl } from '../../data/site';
 import { imagen } from '../../data/images';
 import SectionHeader from '../ui/SectionHeader.astro';
 import Button from '../ui/Button.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon';
 
 const { cubrimos } = site;
 ---
@@ -37,10 +37,12 @@ const { cubrimos } = site;
     </div>
 
     <div class="rv mt-10 text-center" data-delay="0.2">
-      <Button href="#form" variant="primary" size="lg">
-        {cubrimos.cta}
-        <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
+      {site.contact.whatsapp && (
+      <Button href={whatsappUrl()} variant="whatsapp" size="lg" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-origen="cubrimos">
+        <WhatsAppIcon size={19} />
+        Escribir por WhatsApp
       </Button>
+    )}
     </div>
   </div>
 </section>

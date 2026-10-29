@@ -5,7 +5,7 @@ import WhatsAppIcon from '../ui/WhatsAppIcon';
 
 const { footer, brand, contact, comunas, socials } = site;
 const year = new Date().getFullYear();
-const hasContact = Boolean(contact.phoneHref || contact.whatsapp || contact.email || contact.hours || comunas.length);
+const hasContact = Boolean(contact.phoneHref || contact.whatsapp || contact.email || contact.offices.length || contact.hours || comunas.length);
 ---
 
 <footer class="cv-auto on-dark relative overflow-hidden bg-[#0B1626] text-white/65" style="--cv-h: 700px; --cv-h-lg: 560px">
@@ -16,7 +16,15 @@ const hasContact = Boolean(contact.phoneHref || contact.whatsapp || contact.emai
           <img src={brand.logo.src} width={brand.logo.width} height={brand.logo.height} alt={brand.logo.alt} class="h-11 w-auto" loading="lazy" />
         </a>
         <p class="mt-3 font-serif text-[15px] italic tracking-[0.02em] text-white/80">{brand.tagline}</p>
-        <p class="mt-5 max-w-xs text-[13.5px] leading-relaxed">{footer.description}</p>
+        {
+          contact.contactName && (
+            <p class="mt-5 text-[14px] leading-snug text-white/85">
+              <span class="block font-semibold">{contact.contactName}</span>
+              <span class="block text-[12.5px] text-white/60">{contact.contactRole}</span>
+            </p>
+          )
+        }
+        <p class="mt-4 max-w-xs text-[13.5px] leading-relaxed">{footer.description}</p>
         {
           contact.registry && (
             <p class="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-[11.5px] leading-snug text-white/70">
@@ -70,18 +78,21 @@ const hasContact = Boolean(contact.phoneHref || contact.whatsapp || contact.emai
                     class="flex items-center gap-2.5 transition hover:text-white"
                   >
                     <WhatsAppIcon size={15} className="text-white/40" />
-                    WhatsApp
+                    {contact.whatsappDisplay || 'WhatsApp'}
                   </a>
                 </li>
               )}
-              {contact.email && (
+              {(contact.offices.length ? contact.offices : contact.email ? [{ city: '', email: contact.email }] : []).map(office => (
                 <li>
-                  <a href={`mailto:${contact.email}`} class="flex items-center gap-2.5 break-all transition hover:text-white">
-                    <Mail size={15} className="shrink-0 text-white/40" aria-hidden="true" />
-                    {contact.email}
+                  <a href={`mailto:${office.email}`} class="flex items-start gap-2.5 break-all transition hover:text-white">
+                    <Mail size={15} className="mt-0.5 shrink-0 text-white/40" aria-hidden="true" />
+                    <span>
+                      {office.city && <span class="block text-[11.5px] uppercase tracking-wider text-white/45">{office.city}</span>}
+                      {office.email}
+                    </span>
                   </a>
                 </li>
-              )}
+              ))}
               {contact.hours && (
                 <li class="flex items-center gap-2.5">
                   <Clock size={15} className="text-white/40" aria-hidden="true" />

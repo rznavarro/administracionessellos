@@ -1,9 +1,9 @@
 ---
-import { ArrowRight } from 'lucide-react';
-import { site } from '../../data/site';
+import { site, whatsappUrl } from '../../data/site';
 import SectionHeader from '../ui/SectionHeader.astro';
 import PhotoCard from '../ui/PhotoCard.astro';
 import Button from '../ui/Button.astro';
+import WhatsAppIcon from '../ui/WhatsAppIcon';
 
 const { beneficios } = site;
 ---
@@ -17,10 +17,12 @@ const { beneficios } = site;
     </div>
 
     <div class="rv mt-10 text-center" data-delay="0.2">
-      <Button href="#form" variant="primary" size="lg">
-        {beneficios.cta}
-        <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
+      {site.contact.whatsapp && (
+      <Button href={whatsappUrl()} variant="whatsapp" size="lg" target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-origen="beneficios">
+        <WhatsAppIcon size={19} />
+        Escribir por WhatsApp
       </Button>
+    )}
     </div>
   </div>
 </section>

@@ -1,6 +1,5 @@
 ---
 import { Picture } from 'astro:assets';
-import { ArrowRight } from 'lucide-react';
 import { site, whatsappUrl } from '../../data/site';
 import { imagen } from '../../data/images';
 import Button from '../ui/Button.astro';
@@ -33,12 +32,6 @@ const { cta, contact } = site;
       {cta.text}
     </p>
     <div class="rv mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" data-delay="0.15">
-      <Magnet client:visible padding={70} magnetStrength={5} maxOffset={14}>
-        <Button href="#form" variant="white" size="lg">
-          {cta.primary}
-          <ArrowRight size={18} className="transition group-hover/btn:translate-x-1" />
-        </Button>
-      </Magnet>
       {
         contact.whatsapp && (
           <Magnet client:visible padding={70} magnetStrength={5} maxOffset={14}>
