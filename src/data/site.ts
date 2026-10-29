@@ -42,7 +42,7 @@ export const site = {
     // DEMO: reemplazar por la inscripción real antes de publicar
     registry: 'Inscrita en el Registro Nacional de Administradores',
     // Número de inscripción en el Registro Nacional de Administradores. Vacío = no se muestra
-    registryNumber: '000000 (demo)'
+    registryNumber: ''
   },
 
   // Redes sociales. Vacías = no se muestran
