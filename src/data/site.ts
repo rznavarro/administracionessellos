@@ -30,9 +30,10 @@ export const site = {
     email: '',
     hours: '',
     // Inscripción en el Registro Nacional de Administradores (Ley 21.442), ej. 'Ley 21.442 · Registro Nacional de Administradores'
-    registry: '',
+    // DEMO: reemplazar por la inscripción real antes de publicar
+    registry: 'Inscrita en el Registro Nacional de Administradores',
     // Número de inscripción en el Registro Nacional de Administradores. Vacío = no se muestra
-    registryNumber: ''
+    registryNumber: '000000 (demo)'
   },
 
   // Redes sociales. Vacías = no se muestran
@@ -163,6 +164,22 @@ export const site = {
       { foto: '02-condominio-jardines', alt: 'Edificio con jardines, vecinos y una mascota paseando', label: 'Edificios' },
       { foto: '13-condominio-casas', alt: 'Condominio con senderos, jardines y portón de acceso', label: 'Condominios de casas' }
     ] as { foto: string; alt: string; label: string }[]
+  },
+
+  // Comunidades de referencia (slide). Vacío = no se muestra la sección.
+  // Cargar SOLO comunidades que ADMINOR administra de verdad y citas con autorización escrita de quien las dice.
+  referencias: {
+    tag: 'Comunidades de referencia',
+    title: 'Comunidades que ya confían en ADMINOR',
+    text: 'Edificios y condominios que administramos hoy.',
+    // DEMO: datos ficticios solo para mostrar el diseño al cliente. Reemplazar por comunidades reales antes de publicar
+    items: [
+      { comunidad: 'Edificio Alto Parque', comuna: 'Las Condes', tipo: 'Edificio residencial', unidades: '120 unidades', quote: 'Ahora entendemos en qué se va cada peso del gasto común. El informe semanal nos ahorró muchas reuniones.', autor: 'Carolina M.', cargo: 'Presidenta del comité' },
+      { comunidad: 'Torre Los Aromos', comuna: 'Vitacura', tipo: 'Edificio residencial', unidades: '85 unidades', quote: 'Las mantenciones están al día y cuando pedimos algo responden el mismo día.', autor: 'Andrés P.', cargo: 'Copropietario' },
+      { comunidad: 'Condominio Valle Norte', comuna: 'Las Condes', tipo: 'Condominio de casas', unidades: '40 casas', quote: 'Ordenaron proveedores y accesos. Se nota la presencia en terreno cada semana.', autor: 'Marcela R.', cargo: 'Tesorera del comité' },
+      { comunidad: 'Edificio Mirador del Sol', comuna: 'Vitacura', tipo: 'Edificio residencial', unidades: '200 unidades', quote: 'El traspaso fue ordenado: documentos, proveedores y asamblea, todo sin sobresaltos.', autor: 'Felipe T.', cargo: 'Administrador del comité' },
+      { comunidad: 'Torre Parque Central', comuna: 'Las Condes', tipo: 'Edificio residencial', unidades: '150 unidades', quote: 'Transparencia total en los cobros y respuestas rápidas. Lo recomendamos.', autor: 'Isabel V.', cargo: 'Presidenta del comité' }
+    ] as { comunidad: string; comuna: string; tipo: string; unidades?: string; quote?: string; autor?: string; cargo?: string }[]
   },
 
   testimonios: {

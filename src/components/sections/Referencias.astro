@@ -1,0 +1,21 @@
+---
+import { site } from '../../data/site';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Referencias from '../islands/Referencias';
+
+const { referencias } = site;
+---
+
+<!-- Sin items en site.ts no se muestra la sección -->
+{
+  referencias.items.length > 0 && (
+    <section id="referencias" class="cv-auto relative overflow-hidden bg-b6 py-24 lg:py-32" style="--cv-h: 700px; --cv-h-lg: 700px">
+      <div class="container-x">
+        <SectionHeader tag={referencias.tag} title={referencias.title} text={referencias.text} align="center" />
+      </div>
+      <div class="mt-14">
+        <Referencias client:visible items={referencias.items} />
+      </div>
+    </section>
+  )
+}
