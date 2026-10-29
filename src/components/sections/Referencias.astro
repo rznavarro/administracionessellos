@@ -1,29 +1,31 @@
 ---
-import { getImage } from 'astro:assets';
 import { site } from '../../data/site';
-import { imagen } from '../../data/images';
 import SectionHeader from '../ui/SectionHeader.astro';
-import Referencias from '../islands/Referencias';
 
 const { referencias } = site;
-// Convierte `foto` (nombre en src/assets/imagenes) en una URL optimizada para la isla de React
-const items = await Promise.all(
-  referencias.items.map(async item => ({
-    ...item,
-    image: item.foto ? (await getImage({ src: imagen(item.foto), width: 660, format: 'webp' })).src : undefined
-  }))
-);
 ---
 
 <!-- Sin items en site.ts no se muestra la sección -->
 {
-  items.length > 0 && (
-    <section id="referencias" class="cv-auto relative overflow-hidden bg-b6 py-24 lg:py-32" style="--cv-h: 700px; --cv-h-lg: 700px">
+  referencias.items.length > 0 && (
+    <section id="referencias" class="cv-auto relative bg-b6 py-20 lg:py-24" style="--cv-h: 1400px; --cv-h-lg: 640px">
       <div class="container-x">
         <SectionHeader tag={referencias.tag} title={referencias.title} text={referencias.text} align="center" />
-      </div>
-      <div class="mt-14">
-        <Referencias client:visible items={items} />
+        <div class="mt-12 flex flex-wrap justify-center gap-5">
+          {referencias.items.map(item => (
+            <figure class="w-full rounded-2xl border border-g4/70 bg-white p-6 sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]">
+              {item.quote && <blockquote class="text-[15px] leading-[1.7] text-g2">“{item.quote}”</blockquote>}
+              <figcaption class={item.quote ? 'mt-5 border-t border-g4/70 pt-4' : ''}>
+                <span class="block text-[14.5px] font-semibold text-g1">{item.comunidad}</span>
+                <span class="mt-0.5 block text-[13px] text-g3">
+                  {item.comuna}
+                  {item.autor && ` · ${item.autor}`}
+                  {item.cargo && `, ${item.cargo}`}
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
       </div>
     </section>
   )
