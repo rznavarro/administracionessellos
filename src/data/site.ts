@@ -174,12 +174,12 @@ export const site = {
     text: 'Edificios y condominios que administramos hoy.',
     // DEMO: datos ficticios solo para mostrar el diseño al cliente. Reemplazar por comunidades reales antes de publicar
     items: [
-      { comunidad: 'Edificio Alto Parque', comuna: 'Las Condes', tipo: 'Edificio residencial', unidades: '120 unidades', quote: 'Ahora entendemos en qué se va cada peso del gasto común. El informe semanal nos ahorró muchas reuniones.', autor: 'Carolina M.', cargo: 'Presidenta del comité' },
-      { comunidad: 'Torre Los Aromos', comuna: 'Vitacura', tipo: 'Edificio residencial', unidades: '85 unidades', quote: 'Las mantenciones están al día y cuando pedimos algo responden el mismo día.', autor: 'Andrés P.', cargo: 'Copropietario' },
-      { comunidad: 'Condominio Valle Norte', comuna: 'Las Condes', tipo: 'Condominio de casas', unidades: '40 casas', quote: 'Ordenaron proveedores y accesos. Se nota la presencia en terreno cada semana.', autor: 'Marcela R.', cargo: 'Tesorera del comité' },
-      { comunidad: 'Edificio Mirador del Sol', comuna: 'Vitacura', tipo: 'Edificio residencial', unidades: '200 unidades', quote: 'El traspaso fue ordenado: documentos, proveedores y asamblea, todo sin sobresaltos.', autor: 'Felipe T.', cargo: 'Administrador del comité' },
-      { comunidad: 'Torre Parque Central', comuna: 'Las Condes', tipo: 'Edificio residencial', unidades: '150 unidades', quote: 'Transparencia total en los cobros y respuestas rápidas. Lo recomendamos.', autor: 'Isabel V.', cargo: 'Presidenta del comité' }
-    ] as { comunidad: string; comuna: string; tipo: string; unidades?: string; quote?: string; autor?: string; cargo?: string }[]
+      { comunidad: 'Edificio Alto Parque', foto: '01-edificio-residencial-hero', comuna: 'Las Condes', tipo: 'Edificio residencial', unidades: '120 unidades', quote: 'Ahora entendemos en qué se va cada peso del gasto común. El informe semanal nos ahorró muchas reuniones.', autor: 'Carolina M.', cargo: 'Presidenta del comité' },
+      { comunidad: 'Torre Los Aromos', foto: '15-edificio-atardecer', comuna: 'Vitacura', tipo: 'Edificio residencial', unidades: '85 unidades', quote: 'Las mantenciones están al día y cuando pedimos algo responden el mismo día.', autor: 'Andrés P.', cargo: 'Copropietario' },
+      { comunidad: 'Condominio Valle Norte', foto: '13-condominio-casas', comuna: 'Las Condes', tipo: 'Condominio de casas', unidades: '40 casas', quote: 'Ordenaron proveedores y accesos. Se nota la presencia en terreno cada semana.', autor: 'Marcela R.', cargo: 'Tesorera del comité' },
+      { comunidad: 'Edificio Mirador del Sol', foto: '02-condominio-jardines', comuna: 'Vitacura', tipo: 'Edificio residencial', unidades: '200 unidades', quote: 'El traspaso fue ordenado: documentos, proveedores y asamblea, todo sin sobresaltos.', autor: 'Felipe T.', cargo: 'Administrador del comité' },
+      { comunidad: 'Torre Parque Central', foto: '09-porteria-segura', comuna: 'Las Condes', tipo: 'Edificio residencial', unidades: '150 unidades', quote: 'Transparencia total en los cobros y respuestas rápidas. Lo recomendamos.', autor: 'Isabel V.', cargo: 'Presidenta del comité' }
+    ] as { comunidad: string; foto?: string; comuna: string; tipo: string; unidades?: string; quote?: string; autor?: string; cargo?: string }[]
   },
 
   testimonios: {
