@@ -34,14 +34,14 @@ const { brand, nav, contact } = site;
   </div>
 </header>
 
-<!-- Marca en los primeros 24 px de la página: cuando sale de pantalla, el nav pasa a fondo sólido -->
-<span id="nav-sentinel" class="pointer-events-none absolute inset-x-0 top-0 h-6" aria-hidden="true"></span>
-
 <script>
-  // IntersectionObserver en vez de leer scrollY: leerlo al cargar fuerza un layout de toda la página
+  // El fondo del nav aparece cuando la hero termina de pasar bajo la barra (IntersectionObserver: no lee scrollY)
   const header = document.querySelector<HTMLElement>('.site-nav');
-  const sentinel = document.getElementById('nav-sentinel');
-  if (header && sentinel) {
-    new IntersectionObserver(([entry]) => header.toggleAttribute('data-scrolled', !entry.isIntersecting)).observe(sentinel);
+  const hero = document.getElementById('inicio');
+  if (header && hero) {
+    const navHeight = matchMedia("(min-width: 1024px)").matches ? 76 : 64; // alturas del nav (sin leer layout)
+    new IntersectionObserver(([entry]) => header.toggleAttribute('data-scrolled', !entry.isIntersecting), {
+      rootMargin: `-${navHeight}px 0px 0px 0px`
+    }).observe(hero);
   }
 </script>
